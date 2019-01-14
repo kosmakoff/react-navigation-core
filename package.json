@@ -41,7 +41,7 @@
   },
   "homepage": "https://github.com/react-navigation/react-navigation-core#readme",
   "dependencies": {
-    "@types/query-string": "^6.1.1",
+    "@types/query-string": "^6.2.0",
     "create-react-context": "0.2.2",
     "hoist-non-react-statics": "^3.2.1",
     "path-to-regexp": "^1.7.0",
@@ -80,7 +80,7 @@
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged"
-     }
+    }
   },
   "lint-staged": {
     "{src}/**/*.ts*": [
