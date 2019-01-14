@@ -5,7 +5,7 @@ interface CustomActions {
   foo: (bar: any) => {
     type: 'FooBarAction',
     bar: any
-  }
+  };
 }
 
 test('getNavigation provides default action helpers', () => {
