@@ -588,6 +588,13 @@
   dependencies:
     "@types/react" "*"
 
+"@types/react-lifecycles-compat@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@types/react-lifecycles-compat/-/react-lifecycles-compat-3.0.0.tgz#bfcd376cf1ca1bda2f2a19c2372578b94769d4b8"
+  integrity sha512-RTA5g/0Uvn15E3SkBDSTLmnScwIH8h/WT73wivXparHdQeH+JeT63Wk6EucnlhFV5+s+gHhXBbcENxv/6D3PnQ==
+  dependencies:
+    "@types/react" "*"
+
 "@types/react-native@^0.57.17":
   version "0.57.27"
   resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.57.27.tgz#d12a66836f330bf3b6364a44f662b92660170ff4"
