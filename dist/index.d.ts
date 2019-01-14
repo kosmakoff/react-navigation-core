@@ -1,5 +1,5 @@
 export { default as StateUtils } from './StateUtils';
-export { default as getNavigation } from './getNavigation';
+export { getNavigation } from './getNavigation';
 export { getActiveChildNavigationOptions } from './screens';
 export { createNavigator, createSwitchNavigator } from './navigators';
 export { NavigationContext, NavigationConsumer, NavigationProvider } from './context';

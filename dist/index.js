@@ -4,7 +4,7 @@ const tslib_1 = require("tslib");
 var StateUtils_1 = require("./StateUtils");
 exports.StateUtils = StateUtils_1.default;
 var getNavigation_1 = require("./getNavigation");
-exports.getNavigation = getNavigation_1.default;
+exports.getNavigation = getNavigation_1.getNavigation;
 var screens_1 = require("./screens");
 exports.getActiveChildNavigationOptions = screens_1.getActiveChildNavigationOptions;
 // Navigators

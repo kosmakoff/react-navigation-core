@@ -10,7 +10,7 @@ import {
   NavigationParams
 } from './types';
 
-export default function getNavigation<
+export function getNavigation<
   State = {},
   Params = NavigationParams,
   Actions = {}
