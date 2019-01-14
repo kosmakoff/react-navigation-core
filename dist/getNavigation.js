@@ -31,5 +31,5 @@ function getNavigation(router, state, dispatch, actionSubscribers, getScreenProp
         }, dangerouslyGetParent: () => null, _childrenNavigation: getChildrenNavigationCache_1.default(getCurrentNavigation()) });
     return navigation;
 }
-exports.getNavigation = getNavigation;
+exports.default = getNavigation;
 //# sourceMappingURL=getNavigation.js.map
