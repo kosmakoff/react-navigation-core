@@ -49,7 +49,7 @@ android/app/libs
 android/keystores/debug.keystore
 
 # Build
-dist/
+#dist/
 
 # Test & Code coverage files
 coverage/
