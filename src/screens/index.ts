@@ -115,7 +115,7 @@ export interface NavigationScreenProps<
   State,
   Options = NavigationScreenOptions
 > {
-  navigation?: NavigationScreenPropBase<State>;
+  navigation?: NavigationScreenProp<State>;
   screenProps?: NavigationComponentScreenProps;
   navigationOptions?: NavigationScreenConfig<State, Options>;
 };
@@ -130,7 +130,7 @@ export interface NavigationNavigatorProps<
 };
 
 export interface NavigationComponentProps<State> {
-  navigation: NavigationScreenPropBase<State>;
+  navigation: NavigationScreenProp<State>;
   screenProps: NavigationComponentScreenProps;
 };
 
@@ -138,7 +138,7 @@ export interface NavigationScreenConfigParams<
   State,
   Options = NavigationScreenOptions
 > {
-  navigation: NavigationScreenPropBase<State> ;
+  navigation: NavigationScreenProp<State> ;
   screenProps: NavigationComponentScreenProps;
   navigationOptions: Options;
 };
