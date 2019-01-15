@@ -50,7 +50,7 @@ export declare type NavigationNavigator<State = NavigationState, Options = Navig
     navigationOptions?: NavigationScreenConfig<State, Options>;
 };
 export interface NavigationScreenProps<State, Options = NavigationScreenOptions> {
-    navigation?: NavigationScreenPropBase<State>;
+    navigation?: NavigationScreenProp<State>;
     screenProps?: NavigationComponentScreenProps;
     navigationOptions?: NavigationScreenConfig<State, Options>;
 }
@@ -60,7 +60,7 @@ export interface NavigationNavigatorProps<State, Options = NavigationScreenOptio
     navigationOptions?: NavigationScreenConfig<State, Options>;
 }
 export interface NavigationComponentProps<State> {
-    navigation: NavigationScreenPropBase<State>;
+    navigation: NavigationScreenProp<State>;
     screenProps: NavigationComponentScreenProps;
 }
 export interface NavigationScreenConfigParams<State, Options = NavigationScreenOptions> {
