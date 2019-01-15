@@ -1,8 +1,8 @@
 import * as pathUtils from './pathUtils';
-import { NavigationParams, NavigationRoute } from '../types';
+import { NavigationParams, NavigationRoute, NavigationState } from '../types';
 import { NavigationConfig, NavigationComponent, NavigationScreenOptions, NavigationScreenOptionsGetter } from '../screens';
 import { NavigationAction, NavigationBackAction, NavigationNavigateAction, NavigationPopAction, NavigationPopToTopAction, NavigationPushAction, NavigationResetAction, NavigationPopActionPayload, NavigationPopToTopActionPayload, NavigationReplaceAction } from '../actions';
-export interface NavigationRouter<State, Options = NavigationScreenOptions, Actions = {}> {
+export interface NavigationRouter<State = NavigationState, Options = NavigationScreenOptions, Actions = {}> {
     getActionCreators: NavigationRouterActionCreatorsCallback<Actions>;
     /**
      * The reducer that outputs the new navigation state for a given action, with

@@ -4,14 +4,15 @@ import getChildRouter from './getChildRouter';
 import { getNavigationActionCreators } from './actions';
 import {
   NavigationScreenProp,
-  NavigationScreenPropChild
+  NavigationScreenPropRoot
 } from './screens';
 import {
   NavigationParams,
   NavigationRoute,
-  NavigationState
+  NavigationStateRoute,
 } from './types';
 
+/*
 const createParamGetter = <P extends NavigationParams>(route: NavigationRoute<P>) =>
   <T extends keyof P>(paramName: T, defaultValue: NonNullable<P[T]>): NonNullable<P[T]> => {
     const params = route.params;
@@ -22,16 +23,28 @@ const createParamGetter = <P extends NavigationParams>(route: NavigationRoute<P>
 
     return defaultValue;
   };
+*/
+
+const createParamGetter = <P extends NavigationParams>(route: NavigationRoute<P>) =>
+  <T extends keyof P>(paramName: T, defaultValue?: P[T]): P[T] | undefined => {
+    const params = route.params;
+
+    if (params && paramName in params) {
+      return params[paramName];
+    }
+
+    return defaultValue;
+  };
 
 export default function getChildNavigation<
-  State extends NavigationState,
+  State extends NavigationStateRoute,
   Params = NavigationParams,
   Actions = {},
 >(
-  navigation: NavigationScreenProp<State, Params, Actions>,
+  navigation: NavigationScreenPropRoot<State, Params, Actions>,
   childKey: string,
-  getCurrentParentNavigation: () => NavigationScreenProp<State, Params, Actions> | null
-): NavigationScreenPropChild<State, Params, Actions> | null {
+  getCurrentParentNavigation: () => NavigationScreenPropRoot<State, Params, Actions> | null
+): NavigationScreenProp<State, Params, Actions> | null {
 
   const children = getChildrenNavigationCache(navigation);
   const childRoute = navigation.state.routes.find(r => r.key === childKey);
@@ -44,7 +57,7 @@ export default function getChildNavigation<
     return children[childKey];
   }
 
-  const childRouter = getChildRouter(navigation.router as any, childRoute.routeName);
+  const childRouter = getChildRouter(navigation.router, childRoute.routeName);
 
   // If the route has children, we'll use this to pass in to the action creators
   // for the childRouter so that any action that depends on the active route will
@@ -69,14 +82,13 @@ export default function getChildNavigation<
 
   if (children[childKey]) {
     children[childKey] = {
-      ...children[childKey] as any,
+      ...children[childKey],
       ...actionHelpers,
-      state: childRoute as NavigationState,
-      router: childRouter as any,
+      state: childRoute,
+      router: childRouter,
       actions: actionCreators,
-      //getParam: createParamGetter(childRoute) as any, // TS overload method workaround
       getParam: createParamGetter(childRoute),
-    } as NavigationScreenPropChild<State, Params, Actions>;
+    }
 
     return children[childKey];
   }
@@ -88,10 +100,9 @@ export default function getChildNavigation<
   children[childKey] = {
     ...actionHelpers,
 
-    state: childRoute as NavigationState,
-    router: childRouter as any,
+    state: childRoute,
+    router: childRouter,
     actions: actionCreators,
-    //getParam: createParamGetter(childRoute) as any,
     getParam: createParamGetter(childRoute),
 
     getChildNavigation: (grandChildKey: string) =>
@@ -119,7 +130,7 @@ export default function getChildNavigation<
     dangerouslyGetParent: getCurrentParentNavigation,
     addListener: childSubscriber.addListener,
     emit: childSubscriber.emit,
-  } as NavigationScreenPropChild<State, Params, Actions>;
+  } as NavigationScreenProp<State, Params, Actions>;
 
   return children[childKey];
 }

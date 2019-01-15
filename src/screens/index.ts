@@ -34,16 +34,15 @@ interface NavigationScreenPropInterface<State, Params, Actions>
   actions: NavigationActionCreators<Params> & Actions;
   router: NavigationRouter<State, any, Actions>;
   getScreenProps: () => {};
-  getChildNavigation: (childKey: string) =>
-    NavigationScreenPropChild<State, Params, Actions> | null;
-  dangerouslyGetParent: () => NavigationScreenProp<State, Params, Actions> | null | undefined;
+  getChildNavigation: (childKey: string) => NavigationScreenProp<State, Params, Actions> | null;
+  dangerouslyGetParent: () => NavigationScreenPropRoot<State, Params, Actions> | null | undefined;
   isFocused: (childKey?: string) => boolean;
   _childrenNavigation?: {
     [cacheKey: string ]: NavigationScreenProp<State, any, any>
   };
 }
 
-export type NavigationScreenProp<
+export type NavigationScreenPropRoot<
   State = NavigationState,
   Params = NavigationParams,
   Actions = {}
@@ -52,21 +51,17 @@ export type NavigationScreenProp<
   & Dispatched<NavigationActionCreators<Params>>
   & Dispatched<Actions>;
 
-export type NavigationScreenPropChild<
+export type NavigationScreenProp<
   State = NavigationState,
-  Params = NavigationParams,
+  P = NavigationParams,
   Actions = {}
 > =
-  NavigationScreenProp<State, Params, Actions>
+  NavigationScreenPropRoot<State, P, Actions>
   & {
     emit?: NavigationEmitEvent;
+    getParam<T extends keyof P>(param: T, fallback: NonNullable<P[T]>): NonNullable<P[T]>;
+    getParam<T extends keyof P>(param: T): P[T];
   }
-  & NavigationGetParam<Params>;
-
-interface NavigationGetParam<P> {
-  getParam<T extends keyof P>(param: T, fallback: NonNullable<P[T]>): NonNullable<P[T]>;
-  getParam<T extends keyof P>(param: T): P[T];
-};
 
 export type NavigationScreenOptionsGetter<
   State,
@@ -129,7 +124,7 @@ export interface NavigationNavigatorProps<
   State,
   Options = NavigationScreenOptions
 > {
-  navigation: NavigationScreenPropChild<State>;
+  navigation: NavigationScreenProp<State>;
   screenProps: NavigationComponentScreenProps;
   navigationOptions?: NavigationScreenConfig<State, Options>;
 };

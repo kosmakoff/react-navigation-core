@@ -1,7 +1,8 @@
 import * as pathUtils from './pathUtils';
 import {
   NavigationParams,
-  NavigationRoute
+  NavigationRoute,
+  NavigationState
 } from '../types';
 import {
   NavigationConfig,
@@ -23,7 +24,7 @@ import {
 } from '../actions';
 
 export interface NavigationRouter<
-  State,
+  State = NavigationState,
   Options = NavigationScreenOptions,
   Actions = {}
 > {

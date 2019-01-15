@@ -5,6 +5,18 @@ const getChildEventSubscriber_1 = tslib_1.__importDefault(require("./getChildEve
 const getChildrenNavigationCache_1 = tslib_1.__importDefault(require("./getChildrenNavigationCache"));
 const getChildRouter_1 = tslib_1.__importDefault(require("./getChildRouter"));
 const actions_1 = require("./actions");
+/*
+const createParamGetter = <P extends NavigationParams>(route: NavigationRoute<P>) =>
+  <T extends keyof P>(paramName: T, defaultValue: NonNullable<P[T]>): NonNullable<P[T]> => {
+    const params = route.params;
+
+    if (params && paramName in params) {
+      return params[paramName];
+    }
+
+    return defaultValue;
+  };
+*/
 const createParamGetter = (route) => (paramName, defaultValue) => {
     const params = route.params;
     if (params && paramName in params) {
@@ -34,15 +46,11 @@ function getChildNavigation(navigation, childKey, getCurrentParentNavigation) {
         actionHelpers[actionName] = (...args) => navigation.dispatch(actionCreators[actionName](...args));
     });
     if (children[childKey]) {
-        children[childKey] = Object.assign({}, children[childKey], actionHelpers, { state: childRoute, router: childRouter, actions: actionCreators, 
-            //getParam: createParamGetter(childRoute) as any, // TS overload method workaround
-            getParam: createParamGetter(childRoute) });
+        children[childKey] = Object.assign({}, children[childKey], actionHelpers, { state: childRoute, router: childRouter, actions: actionCreators, getParam: createParamGetter(childRoute) });
         return children[childKey];
     }
     const childSubscriber = getChildEventSubscriber_1.default(navigation.addListener, childKey);
-    children[childKey] = Object.assign({}, actionHelpers, { state: childRoute, router: childRouter, actions: actionCreators, 
-        //getParam: createParamGetter(childRoute) as any,
-        getParam: createParamGetter(childRoute), getChildNavigation: (grandChildKey) => getChildNavigation(children[childKey], grandChildKey, () => {
+    children[childKey] = Object.assign({}, actionHelpers, { state: childRoute, router: childRouter, actions: actionCreators, getParam: createParamGetter(childRoute), getChildNavigation: (grandChildKey) => getChildNavigation(children[childKey], grandChildKey, () => {
             const nav = getCurrentParentNavigation();
             return nav && nav.getChildNavigation(childKey);
         }), isFocused: () => {

@@ -1,15 +1,15 @@
 /// <reference types="react" />
 import { NavigationState } from '../types';
-import { NavigationConfig, NavigationScreenOptions, NavigationScreenPropChild, NavigationScreenPropBase, NavigationComponentScreenProps, NavigationComponentProps } from '../screens';
+import { NavigationConfig, NavigationScreenOptions, NavigationScreenProp, NavigationComponentScreenProps, NavigationComponentProps } from '../screens';
 export interface NavigationDescriptor<State = NavigationState, Options = NavigationScreenOptions, Actions = {}> {
     key: string;
     state: State;
-    navigation: NavigationScreenPropChild<State, Options, Actions>;
+    navigation: NavigationScreenProp<State, Options, Actions>;
     getComponent: () => React.ComponentType<NavigationComponentProps<State>>;
     options?: Options;
 }
 export interface NavigationViewProps<State, Options> {
-    navigation: NavigationScreenPropBase<State>;
+    navigation: NavigationScreenProp<State>;
     screenProps: NavigationComponentScreenProps;
     navigationConfig: NavigationConfig<State, Options>;
     descriptors: {

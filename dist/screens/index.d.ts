@@ -17,21 +17,19 @@ interface NavigationScreenPropInterface<State, Params, Actions> extends Navigati
     actions: NavigationActionCreators<Params> & Actions;
     router: NavigationRouter<State, any, Actions>;
     getScreenProps: () => {};
-    getChildNavigation: (childKey: string) => NavigationScreenPropChild<State, Params, Actions> | null;
-    dangerouslyGetParent: () => NavigationScreenProp<State, Params, Actions> | null | undefined;
+    getChildNavigation: (childKey: string) => NavigationScreenProp<State, Params, Actions> | null;
+    dangerouslyGetParent: () => NavigationScreenPropRoot<State, Params, Actions> | null | undefined;
     isFocused: (childKey?: string) => boolean;
     _childrenNavigation?: {
         [cacheKey: string]: NavigationScreenProp<State, any, any>;
     };
 }
-export declare type NavigationScreenProp<State = NavigationState, Params = NavigationParams, Actions = {}> = NavigationScreenPropInterface<State, Params, Actions> & Dispatched<NavigationActionCreators<Params>> & Dispatched<Actions>;
-export declare type NavigationScreenPropChild<State = NavigationState, Params = NavigationParams, Actions = {}> = NavigationScreenProp<State, Params, Actions> & {
+export declare type NavigationScreenPropRoot<State = NavigationState, Params = NavigationParams, Actions = {}> = NavigationScreenPropInterface<State, Params, Actions> & Dispatched<NavigationActionCreators<Params>> & Dispatched<Actions>;
+export declare type NavigationScreenProp<State = NavigationState, P = NavigationParams, Actions = {}> = NavigationScreenPropRoot<State, P, Actions> & {
     emit?: NavigationEmitEvent;
-} & NavigationGetParam<Params>;
-interface NavigationGetParam<P> {
     getParam<T extends keyof P>(param: T, fallback: NonNullable<P[T]>): NonNullable<P[T]>;
     getParam<T extends keyof P>(param: T): P[T];
-}
+};
 export declare type NavigationScreenOptionsGetter<State, Options = NavigationScreenOptions> = (navigation: NavigationScreenPropBase<State>, screenProps?: NavigationComponentScreenProps) => Options | null | undefined;
 export declare type NavigationRouteConfig = NavigationComponent | NavigationScreenRouteConfig;
 export declare type NavigationComponent<State = any> = NavigationScreenComponent<State> | NavigationNavigator<State>;
@@ -57,7 +55,7 @@ export interface NavigationScreenProps<State, Options = NavigationScreenOptions>
     navigationOptions?: NavigationScreenConfig<State, Options>;
 }
 export interface NavigationNavigatorProps<State, Options = NavigationScreenOptions> {
-    navigation: NavigationScreenPropChild<State>;
+    navigation: NavigationScreenProp<State>;
     screenProps: NavigationComponentScreenProps;
     navigationOptions?: NavigationScreenConfig<State, Options>;
 }
