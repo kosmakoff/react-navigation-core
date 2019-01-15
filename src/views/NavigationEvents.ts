@@ -15,10 +15,9 @@ const EventNameToPropName: { [key in NavigationViewEventType]: NavigationEventTy
 };
 
 const subscriptions = Symbol();
-const getPropListener = Symbol();
 
 class NavigationEvents extends React.Component<Partial<NavigationEventsProps<any>>> {
-  [getPropListener] = (eventName: NavigationViewEventType) =>
+  getPropListener = (eventName: NavigationViewEventType) =>
     this.props[EventNameToPropName[eventName]];
 
   componentDidMount() {
@@ -31,7 +30,7 @@ class NavigationEvents extends React.Component<Partial<NavigationEventsProps<any
       this[subscriptions][eventName] = this.props.navigation!.addListener(
         eventName,
         (...args: any[]) => {
-          const propListener = this[getPropListener](eventName) as ((...args: any[]) => void) | undefined;
+          const propListener = this.getPropListener(eventName) as ((...args: any[]) => void) | undefined;
           return propListener && propListener(...args);
         }
       );
