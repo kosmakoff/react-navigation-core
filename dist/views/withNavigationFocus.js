@@ -24,7 +24,7 @@ function withNavigationFocus(Component) {
             ];
         }
         componentWillUnmount() {
-            this[subscriptions].forEach((sub) => sub.remove());
+            this[subscriptions].forEach(sub => sub.remove());
         }
         render() {
             return (React.createElement(Component, Object.assign({}, this.props, { isFocused: this.state.isFocused, ref: this.props.onRef })));

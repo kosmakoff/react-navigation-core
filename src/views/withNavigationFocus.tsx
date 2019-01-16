@@ -20,9 +20,6 @@ export default function withNavigationFocus<P extends object & NavigationFocusIn
   class ComponentWithNavigationFocus extends React.Component<
     P & NavigationOnRefInjectedProps<P, typeof Component>, StateHOC
   > {
-    static displayName = `withNavigationFocus(${Component.displayName ||
-      Component.name})`;
-
     constructor(props: P & NavigationOnRefInjectedProps<P, typeof Component>) {
       super(props);
 
@@ -30,6 +27,11 @@ export default function withNavigationFocus<P extends object & NavigationFocusIn
         isFocused: props.navigation ? props.navigation.isFocused() : false,
       };
     }
+
+    static displayName = `withNavigationFocus(${Component.displayName ||
+      Component.name})`;
+
+    [subscriptions]: NavigationEventSubscription[];
 
     componentDidMount() {
       const { navigation } = this.props;
@@ -49,7 +51,7 @@ export default function withNavigationFocus<P extends object & NavigationFocusIn
     }
 
     componentWillUnmount() {
-      this[subscriptions].forEach((sub: NavigationEventSubscription) => sub.remove());
+      this[subscriptions].forEach(sub => sub.remove());
     }
 
     render() {
