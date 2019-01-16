@@ -4,14 +4,7 @@ declare var process: any;
 
 declare module 'react-lifecycles-compat' {
   import * as React from 'react';
-
-  export function polyfill<P extends {}, T extends React.ComponentType<P> & {}>(
+  export function polyfill<T extends React.ComponentType<any>>(
     Comp: T
-  ): T;
-/*
-  export function polyfill<P>(
-    Comp: React.ComponentType<P>
-  ): React.ComponentType<P>;
-*/
-
+  ): T & { [K in keyof T]: T[K] };
 }

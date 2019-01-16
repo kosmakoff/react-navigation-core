@@ -101,5 +101,4 @@ export function createNavigator<
   }
 
   return polyfill(Navigator);
-  //return polyfill(Navigator) as NavigationNavigator<State, Options, Props>;
 }
