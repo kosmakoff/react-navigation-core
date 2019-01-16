@@ -9,7 +9,7 @@ import {
 
 export default function withNavigation<P extends object & NavigationInjectedProps<any>>(
   Component: React.ComponentType<P>
-): React.ComponentType<P & NavigationOnRefInjectedProps<P, typeof Component>> {
+): React.ComponentClass<P & NavigationOnRefInjectedProps<P, typeof Component>> {
   class ComponentWithNavigation extends React.Component<
     P & NavigationOnRefInjectedProps<P, typeof Component>
   > {

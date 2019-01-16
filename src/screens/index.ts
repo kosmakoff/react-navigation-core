@@ -67,7 +67,7 @@ export type NavigationScreenOptionsGetter<
   State,
   Options = NavigationScreenOptions
 > = (
-  navigation: NavigationScreenProp<State>,
+  navigation: NavigationScreenPropBase<State>,
   screenProps?: NavigationComponentScreenProps
 ) => Options | null | undefined;
 
@@ -138,7 +138,7 @@ export interface NavigationScreenConfigParams<
   State,
   Options = NavigationScreenOptions
 > {
-  navigation: NavigationScreenProp<State> ;
+  navigation: NavigationScreenPropBase<State> ;
   screenProps: NavigationComponentScreenProps;
   navigationOptions: Options;
 };

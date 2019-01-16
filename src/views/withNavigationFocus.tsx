@@ -16,7 +16,7 @@ const subscriptions = Symbol();
 
 export default function withNavigationFocus<P extends object & NavigationFocusInjectedProps<any>>(
   Component: React.ComponentType<P>
-): React.ComponentType<P & NavigationOnRefInjectedProps<P, typeof Component>> {
+): React.ComponentClass<P & NavigationOnRefInjectedProps<P, typeof Component>> {
   class ComponentWithNavigationFocus extends React.Component<
     P & NavigationOnRefInjectedProps<P, typeof Component>, StateHOC
   > {

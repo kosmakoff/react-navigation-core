@@ -30,7 +30,7 @@ export declare type NavigationScreenProp<State = NavigationState, P = Navigation
     getParam<T extends keyof P>(param: T, fallback: NonNullable<P[T]>): NonNullable<P[T]>;
     getParam<T extends keyof P>(param: T): P[T];
 };
-export declare type NavigationScreenOptionsGetter<State, Options = NavigationScreenOptions> = (navigation: NavigationScreenProp<State>, screenProps?: NavigationComponentScreenProps) => Options | null | undefined;
+export declare type NavigationScreenOptionsGetter<State, Options = NavigationScreenOptions> = (navigation: NavigationScreenPropBase<State>, screenProps?: NavigationComponentScreenProps) => Options | null | undefined;
 export declare type NavigationRouteConfig = NavigationComponent | NavigationScreenRouteConfig;
 export declare type NavigationComponent<State = any> = NavigationScreenComponent<State> | NavigationNavigator<State>;
 export declare type NavigationScreenRouteConfig<Params = NavigationParams, Options = NavigationScreenOptions> = ({
@@ -64,7 +64,7 @@ export interface NavigationComponentProps<State> {
     screenProps: NavigationComponentScreenProps;
 }
 export interface NavigationScreenConfigParams<State, Options = NavigationScreenOptions> {
-    navigation: NavigationScreenProp<State>;
+    navigation: NavigationScreenPropBase<State>;
     screenProps: NavigationComponentScreenProps;
     navigationOptions: Options;
 }

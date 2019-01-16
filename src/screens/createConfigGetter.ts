@@ -7,7 +7,7 @@ import {
   NavigationScreenConfigParams,
   NavigationScreenOptions,
   NavigationScreenOptionsGetter,
-  NavigationScreenProp,
+  NavigationScreenPropBase,
   NavigationComponentScreenProps
 } from '../screens';
 
@@ -41,7 +41,7 @@ export default function createConfigGetter<Options extends NavigationScreenOptio
   navigatorScreenConfig?: NavigationScreenConfig<any, Options>
 ): NavigationScreenOptionsGetter<any, Options> {
   return (
-    navigation: NavigationScreenProp<any>,
+    navigation: NavigationScreenPropBase<any>,
     screenProps?: NavigationComponentScreenProps
   ): Options => {
     const { state } = navigation;
