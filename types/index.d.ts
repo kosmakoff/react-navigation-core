@@ -2,6 +2,7 @@
 // https://github.com/DefinitelyTyped/DefinitelyTyped/issues/16825
 declare var process: any;
 
+// TODO: remove when react-lifecycles-compat be updated on DefinitelyTyped
 declare module 'react-lifecycles-compat' {
   import * as React from 'react';
   export function polyfill<T extends React.ComponentType<any>>(
