@@ -19,15 +19,19 @@ export interface NavigationDescriptor<
   options?: Options;
 };
 
+export type NavigationView<
+  State,
+  Options,
+  Props extends object = {}
+> =
+  React.ComponentType<Props & NavigationViewProps<State, Options>>;
+
 export interface NavigationViewProps<State, Options> {
-  navigation: NavigationScreenProp<State>;
+  navigation: NavigationScreenProp<State, Options>;
   screenProps: NavigationComponentScreenProps;
   navigationConfig: NavigationConfig<State, Options>;
   descriptors: { [key: string]: NavigationDescriptor<State, Options> };
 };
-
-export type NavigationView<State, Options> =
-  React.ComponentType<NavigationViewProps<State, Options>>;
 
 export * from './createNavigator';
 export * from './createSwitchNavigator';

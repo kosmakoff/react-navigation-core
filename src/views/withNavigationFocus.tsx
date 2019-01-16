@@ -14,7 +14,7 @@ interface StateHOC {
 
 const subscriptions = Symbol();
 
-export default function withNavigationFocus<P extends NavigationFocusInjectedProps<any>>(
+export default function withNavigationFocus<P extends object & NavigationFocusInjectedProps<any>>(
   Component: React.ComponentType<P>
 ): React.ComponentType<P & NavigationOnRefInjectedProps<P, typeof Component>> {
   class ComponentWithNavigationFocus extends React.Component<

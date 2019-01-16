@@ -24,15 +24,16 @@ interface StateHOC {
  * Create Navigator
  */
 export function createNavigator<
+  Props extends object & NavigationNavigatorProps<State, Options>,
   State extends NavigationState,
   Options = NavigationScreenOptions,
   Actions = {}
 >(
-  NavigationView: NavigationView<State, Options>,
+  NavigationView: NavigationView<State, Options, Props>,
   router: NavigationRouter<State, Options, Actions>,
   navigationConfig: NavigationConfig<State, Options> = {}
-) {
-  class Navigator extends React.Component<NavigationNavigatorProps<State, Options>, StateHOC> {
+): NavigationNavigator<State, Options, Props> {
+  class Navigator extends React.Component<Props, StateHOC> {
     static router = router;
     static navigationOptions = navigationConfig.navigationOptions;
 
@@ -41,10 +42,7 @@ export function createNavigator<
       screenProps: this.props.screenProps,
     };
 
-    static getDerivedStateFromProps(
-      nextProps: NavigationNavigatorProps<State, Options>,
-      prevState: StateHOC
-    ) {
+    static getDerivedStateFromProps(nextProps: Props, prevState: StateHOC) {
       const prevDescriptors = prevState.descriptors;
       const { navigation, screenProps } = nextProps;
       invariant(
@@ -102,5 +100,6 @@ export function createNavigator<
     }
   }
 
-  return polyfill(Navigator) as NavigationNavigator<State, Options>;
+  return polyfill(Navigator);
+  //return polyfill(Navigator) as NavigationNavigator<State, Options, Props>;
 }

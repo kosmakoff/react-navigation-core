@@ -7,7 +7,7 @@ import {
   NavigationOnRefInjectedProps
 } from '../views';
 
-export default function withNavigation<P extends NavigationInjectedProps<any>>(
+export default function withNavigation<P extends object & NavigationInjectedProps<any>>(
   Component: React.ComponentType<P>
 ): React.ComponentType<P & NavigationOnRefInjectedProps<P, typeof Component>> {
   class ComponentWithNavigation extends React.Component<

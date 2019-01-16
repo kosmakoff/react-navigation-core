@@ -104,9 +104,9 @@ export type NavigationScreenComponent<
 export type NavigationNavigator<
   State = NavigationState,
   Options = NavigationScreenOptions,
-  Props = {}
+  Props extends object = {}
 > =
-  React.ComponentType<NavigationNavigatorProps<State, Options> & Props> & {
+  React.ComponentType<Props & NavigationNavigatorProps<State, Options>> & {
     router: NavigationRouter<State, Options, any>;
     navigationOptions?: NavigationScreenConfig<State, Options>;
   };
