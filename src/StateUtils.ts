@@ -1,4 +1,3 @@
-import { invariant } from './utils';
 import { NavigationRoute, NavigationState } from './types';
 
 /**
@@ -39,11 +38,9 @@ const StateUtils = {
    * stack is at.
    */
   push(state: NavigationState, route: NavigationRoute): NavigationState {
-    invariant(
-      StateUtils.indexOf(state, route.key) === -1,
-      'should not push route with duplicated key %s',
-      route.key
-    );
+    if (StateUtils.indexOf(state, route.key) !== -1) {
+      throw new Error(`should not push route with duplicated key ${route.key}`);
+    }
 
     const routes = state.routes.slice();
     routes.push(route);
@@ -81,7 +78,9 @@ const StateUtils = {
       return state;
     }
 
-    invariant(!!state.routes[index], 'invalid index %s to jump to', index);
+    if (!state.routes[index]) {
+      throw new Error(`invalid index ${index} to jump to`);
+    }
 
     return {
       ...state,
@@ -164,12 +163,9 @@ const StateUtils = {
     index: number,
     route: NavigationRoute
   ): NavigationState {
-    invariant(
-      !!state.routes[index],
-      'invalid index %s for replacing route %s',
-      index,
-      route.key
-    );
+    if (!state.routes[index]) {
+      throw new Error(`invalid index ${index} for replacing route ${route.key}`);
+    }
 
     if (state.routes[index] === route && index === state.index) {
       return state;
@@ -191,10 +187,9 @@ const StateUtils = {
    * stack is at if the param `index` isn't provided.
    */
   reset(state: NavigationState, routes: NavigationRoute[], index?: number): NavigationState {
-    invariant(
-      !!(routes.length && Array.isArray(routes)),
-      'invalid routes to replace'
-    );
+    if (!(Array.isArray(routes) && routes.length)) {
+      throw new Error('invalid routes to replace');
+    }
 
     const nextIndex = index === undefined ? routes.length - 1 : index;
 
@@ -205,7 +200,9 @@ const StateUtils = {
       }
     }
 
-    invariant(!!routes[nextIndex], 'invalid index %s to reset', nextIndex);
+    if (!routes[nextIndex]) {
+      throw new Error(`invalid index ${nextIndex} to reset`);
+    }
 
     return {
       ...state,

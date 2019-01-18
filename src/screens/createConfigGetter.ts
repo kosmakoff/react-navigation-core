@@ -1,4 +1,3 @@
-import { invariant } from '../utils';
 import validateScreenOptions from './validateScreenOptions';
 import { NavigationRouteConfigMap } from '../types';
 import {
@@ -47,10 +46,9 @@ export default function createConfigGetter<Options extends NavigationScreenOptio
     const { state } = navigation;
     const route = state;
 
-    invariant(
-      !!route.routeName && typeof route.routeName === 'string',
-      'Cannot get config because the route does not have a routeName.'
-    );
+    if (!route.routeName || typeof route.routeName !== 'string') {
+      throw new Error('Cannot get config because the route does not have a routeName.');
+    }
 
     const Component = getScreenForRouteName(routeConfigs, route.routeName);
     const routeConfig = routeConfigs[route.routeName];

@@ -24,7 +24,7 @@
     "esModuleInterop": true,
     "allowJs": false
   },
-  "include": ["src", "typings"],
+  "include": ["src"],
   "exclude": [
     "**/__tests__",
     "dist",

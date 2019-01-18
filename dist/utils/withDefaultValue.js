@@ -7,6 +7,6 @@ function withDefaultValue(obj, key, defaultValue) {
     obj[key] = defaultValue;
     return obj;
 }
-exports.withDefaultValue = withDefaultValue;
+exports.default = withDefaultValue;
 ;
 //# sourceMappingURL=withDefaultValue.js.map

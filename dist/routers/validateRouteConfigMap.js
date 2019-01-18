@@ -1,14 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const react_is_1 = require("react-is");
-const utils_1 = require("../utils");
 /**
  * Make sure the config passed e.g. to StackRouter, TabRouter has
  * the correct format, and throw a clear error if it doesn't.
  */
 function validateRouteConfigMap(routeConfigs) {
     const routeNames = Object.keys(routeConfigs);
-    utils_1.invariant(routeNames.length > 0, 'Please specify at least one route when configuring a navigator.');
+    if (routeNames.length === 0) {
+        throw new Error('Please specify at least one route when configuring a navigator.');
+    }
     routeNames.forEach(routeName => {
         const routeConfig = routeConfigs[routeName];
         const screenComponent = getScreenComponent(routeConfig);

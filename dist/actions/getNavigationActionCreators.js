@@ -1,13 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const utils_1 = require("../utils");
 const actions_1 = require("../actions");
 function getNavigationActionCreators(route) {
     return {
         goBack: (key) => {
             let actualizedKey = key;
             if (key === undefined && 'key' in route) {
-                utils_1.invariant(typeof route.key === 'string', 'key should be a string');
+                if (typeof route.key !== 'string') {
+                    throw new Error('key should be a string');
+                }
                 actualizedKey = route.key;
             }
             return actions_1.NavigationActions.back({ key: actualizedKey });
@@ -20,13 +21,21 @@ function getNavigationActionCreators(route) {
                     routeName: navigateTo,
                 });
             }
-            utils_1.invariant(typeof navigateTo === 'object', 'Must navigateTo an object or a string');
-            utils_1.invariant(params == null, 'Params must not be provided to .navigate() when specifying an object');
-            utils_1.invariant(action == null, 'Child action must not be provided to .navigate() when specifying an object');
+            if (typeof navigateTo !== 'object') {
+                throw new Error('Must navigateTo an object or a string');
+            }
+            if (params != null) {
+                throw new Error('Params must not be provided to .navigate() when specifying an object');
+            }
+            if (action != null) {
+                throw new Error('Child action must not be provided to .navigate() when specifying an object');
+            }
             return actions_1.NavigationActions.navigate(navigateTo);
         },
         setParams: (params) => {
-            utils_1.invariant('key' in route && typeof route.key === 'string', 'setParams cannot be called by root navigator');
+            if (typeof route.key !== 'string') {
+                throw Error('setParams cannot be called by root navigator');
+            }
             return actions_1.NavigationActions.setParams({ params, key: route.key });
         },
     };

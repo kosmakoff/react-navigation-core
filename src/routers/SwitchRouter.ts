@@ -1,4 +1,3 @@
-import { invariant } from '../utils';
 import { createPathParser } from './pathUtils';
 import {
   createConfigGetter,
@@ -347,11 +346,10 @@ export function SwitchRouter<Actions extends NavigationSwitchRouterActionCreator
     getComponentForState(state: NavigationState) {
       const activeChildRoute = state.routes[state.index];
       const { routeName } = activeChildRoute;
-      invariant(
-        !!routeName,
-        `There is no route defined for index ${state.index}. Check that
-        that you passed in a navigation state with a valid tab/screen index.`
-      );
+      if (!routeName) {
+        throw new Error(`There is no route defined for index ${state.index}. Check that
+        that you passed in a navigation state with a valid tab/screen index.`);
+      }
       const childRouter = childRouters[routeName];
       if (childRouter) {
         return childRouter.getComponentForState(activeChildRoute as NavigationStateRoute);

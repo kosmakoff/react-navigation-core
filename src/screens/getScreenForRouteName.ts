@@ -1,5 +1,4 @@
 import { isValidElementType } from 'react-is';
-import { invariant } from '../utils';
 import { NavigationComponent } from '../screens';
 import { NavigationRouteConfigMap } from '../types';
 
@@ -31,13 +30,12 @@ export default function getScreenForRouteName(
     typeof routeConfig.getScreen === 'function'
   ) {
     const screen = routeConfig.getScreen();
-    invariant(
-      isValidElementType(screen),
-      `The getScreen defined for route '${routeName} didn't return a valid ` +
+    if (!isValidElementType(screen)) {
+      throw new Error(`The getScreen defined for route '${routeName} didn't return a valid ` +
         'screen or navigator.\n\n' +
         'Please pass it like this:\n' +
-        `${routeName}: {\n  getScreen: () => require('./MyScreen').default\n}`
-    );
+        `${routeName}: {\n  getScreen: () => require('./MyScreen').default\n}`);
+    }
     return screen;
   }
 

@@ -1,4 +1,3 @@
-import { invariant } from '../utils';
 import { NavigationParams, NavigationRoute } from '../types';
 import {
   NavigationActions,
@@ -13,7 +12,9 @@ export function getNavigationActionCreators<Params = NavigationParams>(
     goBack: (key?: string) => {
       let actualizedKey = key;
       if (key === undefined && 'key' in route) {
-        invariant(typeof route.key === 'string', 'key should be a string');
+        if (typeof route.key !== 'string') {
+          throw new Error('key should be a string');
+        }
         actualizedKey = route.key;
       }
       return NavigationActions.back({ key: actualizedKey });
@@ -26,25 +27,21 @@ export function getNavigationActionCreators<Params = NavigationParams>(
           routeName: navigateTo,
         });
       }
-      invariant(
-        typeof navigateTo === 'object',
-        'Must navigateTo an object or a string'
-      );
-      invariant(
-        params == null,
-        'Params must not be provided to .navigate() when specifying an object'
-      );
-      invariant(
-        action == null,
-        'Child action must not be provided to .navigate() when specifying an object'
-      );
+      if (typeof navigateTo !== 'object') {
+        throw new Error('Must navigateTo an object or a string');
+      }
+      if (params != null) {
+        throw new Error('Params must not be provided to .navigate() when specifying an object');
+      }
+      if (action != null) {
+        throw new Error('Child action must not be provided to .navigate() when specifying an object');
+      }
       return NavigationActions.navigate(navigateTo);
     },
     setParams: (params?: Params) => {
-      invariant(
-        'key' in route && typeof route.key === 'string',
-        'setParams cannot be called by root navigator'
-      );
+      if (typeof route.key !== 'string') {
+        throw Error('setParams cannot be called by root navigator');
+      }
       return NavigationActions.setParams({ params, key: route.key });
     },
   };

@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const utils_1 = require("../utils");
 const pathUtils_1 = require("./pathUtils");
 const screens_1 = require("../screens");
 const actions_1 = require("../actions");
@@ -225,8 +224,10 @@ function SwitchRouter(routeConfigs, config = {}) {
         getComponentForState(state) {
             const activeChildRoute = state.routes[state.index];
             const { routeName } = activeChildRoute;
-            utils_1.invariant(!!routeName, `There is no route defined for index ${state.index}. Check that
+            if (!routeName) {
+                throw new Error(`There is no route defined for index ${state.index}. Check that
         that you passed in a navigation state with a valid tab/screen index.`);
+            }
             const childRouter = childRouters[routeName];
             if (childRouter) {
                 return childRouter.getComponentForState(activeChildRoute);

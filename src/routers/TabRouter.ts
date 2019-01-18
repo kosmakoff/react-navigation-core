@@ -1,5 +1,5 @@
 
-import { withDefaultValue } from '../utils';
+import withDefaultValue from '../utils/withDefaultValue';
 import {
   NavigationState,
   NavigationRouteConfigMap

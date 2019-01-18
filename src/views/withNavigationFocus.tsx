@@ -1,6 +1,5 @@
 import * as React from 'react';
 import hoistNonReactStatics from 'hoist-non-react-statics';
-import { invariant } from '../utils';
 import withNavigation from './withNavigation';
 import { NavigationEventSubscription } from '../types';
 import {
@@ -35,16 +34,14 @@ export default function withNavigationFocus<P extends object & NavigationFocusIn
 
     componentDidMount() {
       const { navigation } = this.props;
-      invariant(
-        !!navigation, /* tslint:disable-next-line:max-line-length */
-        'withNavigationFocus can only be used on a view hierarchy of a navigator. The wrapped component is unable to get access to navigation from props or context.'
-      );
-
+      if (!navigation) { /* tslint:disable-next-line:max-line-length */
+        throw new Error('withNavigationFocus can only be used on a view hierarchy of a navigator. The wrapped component is unable to get access to navigation from props or context.');
+      }
       this[subscriptions] = [
-        navigation!.addListener('didFocus', () =>
+        navigation.addListener('didFocus', () =>
           this.setState({ isFocused: true })
         ),
-        navigation!.addListener('willBlur', () =>
+        navigation.addListener('willBlur', () =>
           this.setState({ isFocused: false })
         ),
       ];

@@ -1,5 +1,4 @@
 import StateUtils from '../StateUtils';
-import { invariant } from '../utils';
 import { generateKey } from './KeyGenerator';
 import { createPathParser } from './pathUtils';
 import {
@@ -211,22 +210,18 @@ export function StackRouter<Actions extends NavigationStackRouterActionCreators>
               routeName: replaceWith,
             });
           }
-          invariant(
-            typeof replaceWith === 'object',
-            'Must replaceWith an object or a string'
-          );
-          invariant(
-            params == null,
-            'Params must not be provided to .replace() when specifying an object'
-          );
-          invariant(
-            action == null,
-            'Child action must not be provided to .replace() when specifying an object'
-          );
-          invariant(
-            newKey == null,
-            'Child action must not be provided to .replace() when specifying an object'
-          );
+          if (typeof replaceWith !== 'object') {
+            throw new Error('Must replaceWith an object or a string');
+          }
+          if (params != null) {
+            throw new Error('Params must not be provided to .replace() when specifying an object');
+          }
+          if (action != null) {
+            throw new Error('Child action must not be provided to .replace() when specifying an object');
+          }
+          if (newKey != null) {
+            throw new Error('Child action must not be provided to .replace() when specifying an object');
+          }
           return StackActions.replace(replaceWith);
         },
         reset: (actions: NavigationNavigateAction[], index?: number) =>
@@ -317,10 +312,9 @@ export function StackRouter<Actions extends NavigationStackRouterActionCreators>
       ) {
         const childRouter = childRouters[action.routeName];
 
-        invariant(
-          action.type !== StackActions.PUSH || action.key == null,
-          'StackRouter does not support key on the push action'
-        );
+        if (action.type === StackActions.PUSH && action.key != null) {
+          throw new Error('StackRouter does not support key on the push action');
+        }
 
         // Before pushing a new route we first try to find one in the existing route stack
         // More information on this:

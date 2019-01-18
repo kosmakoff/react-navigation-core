@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const tslib_1 = require("tslib");
 const StateUtils_1 = tslib_1.__importDefault(require("../StateUtils"));
-const utils_1 = require("../utils");
 const KeyGenerator_1 = require("./KeyGenerator");
 const pathUtils_1 = require("./pathUtils");
 const screens_1 = require("../screens");
@@ -117,10 +116,18 @@ function StackRouter(routeConfigs, stackConfig = {}) {
                             routeName: replaceWith,
                         });
                     }
-                    utils_1.invariant(typeof replaceWith === 'object', 'Must replaceWith an object or a string');
-                    utils_1.invariant(params == null, 'Params must not be provided to .replace() when specifying an object');
-                    utils_1.invariant(action == null, 'Child action must not be provided to .replace() when specifying an object');
-                    utils_1.invariant(newKey == null, 'Child action must not be provided to .replace() when specifying an object');
+                    if (typeof replaceWith !== 'object') {
+                        throw new Error('Must replaceWith an object or a string');
+                    }
+                    if (params != null) {
+                        throw new Error('Params must not be provided to .replace() when specifying an object');
+                    }
+                    if (action != null) {
+                        throw new Error('Child action must not be provided to .replace() when specifying an object');
+                    }
+                    if (newKey != null) {
+                        throw new Error('Child action must not be provided to .replace() when specifying an object');
+                    }
                     return actions_1.StackActions.replace(replaceWith);
                 }, reset: (actions, index) => actions_1.StackActions.reset({
                     actions,
@@ -177,7 +184,9 @@ function StackRouter(routeConfigs, stackConfig = {}) {
                 childRouters[action.routeName] !== undefined // undefined means it's not a childRouter or a screen
             ) {
                 const childRouter = childRouters[action.routeName];
-                utils_1.invariant(action.type !== actions_1.StackActions.PUSH || action.key == null, 'StackRouter does not support key on the push action');
+                if (action.type === actions_1.StackActions.PUSH && action.key != null) {
+                    throw new Error('StackRouter does not support key on the push action');
+                }
                 // Before pushing a new route we first try to find one in the existing route stack
                 // More information on this:
                 // https://github.com/react-navigation/rfcs/blob/master/text/0004-less-pushy-navigate.md

@@ -3,7 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const tslib_1 = require("tslib");
 const path_to_regexp_1 = tslib_1.__importStar(require("path-to-regexp"));
 const query_string_1 = tslib_1.__importDefault(require("query-string"));
-const utils_1 = require("../utils");
 const actions_1 = require("../actions");
 ;
 function getParamsFromPath(inputParams, pathMatch, pathMatchKeys) {
@@ -79,7 +78,9 @@ function createPathParser(childRouters, routeConfigs, routerConfig) {
             // then we assume the routeName is an appropriate path
             pathPattern = disableRouteNamePaths ? null : routeName;
         }
-        utils_1.invariant(pathPattern === null || typeof pathPattern === 'string', `Route path for ${routeName} must be specified as a string, or null.`);
+        if (pathPattern !== null && typeof pathPattern !== 'string') {
+            throw new Error(`Route path for ${routeName} must be specified as a string, or null.`);
+        }
         // the path may be specified as null, which is similar to empty string because
         // it allows child routers to handle the action, but it will not match empty paths
         const isPathMatchable = pathPattern !== null;

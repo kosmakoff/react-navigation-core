@@ -1,6 +1,5 @@
 import pathToRegexp, { compile } from 'path-to-regexp';
 import queryString from 'query-string';
-import { invariant } from '../utils';
 import { NavigationScreenRouteConfig } from '../screens';
 import {
   NavigationChildRouters,
@@ -114,10 +113,9 @@ export function createPathParser(
       pathPattern = disableRouteNamePaths ? null : routeName;
     }
 
-    invariant(
-      pathPattern === null || typeof pathPattern === 'string',
-      `Route path for ${routeName} must be specified as a string, or null.`
-    );
+    if (pathPattern !== null && typeof pathPattern !== 'string') {
+      throw new Error(`Route path for ${routeName} must be specified as a string, or null.`);
+    }
 
     // the path may be specified as null, which is similar to empty string because
     // it allows child routers to handle the action, but it will not match empty paths

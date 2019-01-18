@@ -1,5 +1,4 @@
 import { isValidElementType } from 'react-is';
-import { invariant } from '../utils';
 import { NavigationRouteConfigMap } from '../types';
 import { NavigationRouteConfig } from '../screens';
 
@@ -9,10 +8,9 @@ import { NavigationRouteConfig } from '../screens';
  */
 export default function validateRouteConfigMap(routeConfigs: NavigationRouteConfigMap) {
   const routeNames = Object.keys(routeConfigs);
-  invariant(
-    routeNames.length > 0,
-    'Please specify at least one route when configuring a navigator.'
-  );
+  if (routeNames.length === 0) {
+    throw new Error('Please specify at least one route when configuring a navigator.');
+  }
 
   routeNames.forEach(routeName => {
     const routeConfig = routeConfigs[routeName];
