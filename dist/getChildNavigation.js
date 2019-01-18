@@ -5,18 +5,6 @@ const getChildEventSubscriber_1 = tslib_1.__importDefault(require("./getChildEve
 const getChildrenNavigationCache_1 = tslib_1.__importDefault(require("./getChildrenNavigationCache"));
 const getChildRouter_1 = tslib_1.__importDefault(require("./getChildRouter"));
 const actions_1 = require("./actions");
-/*
-const createParamGetter = <P extends NavigationParams>(route: NavigationRoute<P>) =>
-  <T extends keyof P>(paramName: T, defaultValue: NonNullable<P[T]>): NonNullable<P[T]> => {
-    const params = route.params;
-
-    if (params && paramName in params) {
-      return params[paramName];
-    }
-
-    return defaultValue;
-  };
-*/
 const createParamGetter = (route) => (paramName, defaultValue) => {
     const params = route.params;
     if (params && paramName in params) {

@@ -12,19 +12,6 @@ import {
   NavigationStateRoute,
 } from './types';
 
-/*
-const createParamGetter = <P extends NavigationParams>(route: NavigationRoute<P>) =>
-  <T extends keyof P>(paramName: T, defaultValue: NonNullable<P[T]>): NonNullable<P[T]> => {
-    const params = route.params;
-
-    if (params && paramName in params) {
-      return params[paramName];
-    }
-
-    return defaultValue;
-  };
-*/
-
 const createParamGetter = <P extends NavigationParams>(route: NavigationRoute<P>) =>
   <T extends keyof P>(paramName: T, defaultValue?: P[T]): P[T] | undefined => {
     const params = route.params;
@@ -88,7 +75,7 @@ export default function getChildNavigation<
       router: childRouter,
       actions: actionCreators,
       getParam: createParamGetter(childRoute),
-    }
+    };
 
     return children[childKey];
   }
