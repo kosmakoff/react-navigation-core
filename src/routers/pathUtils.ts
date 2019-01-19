@@ -1,5 +1,6 @@
 import pathToRegexp, { compile } from 'path-to-regexp';
 import queryString from 'query-string';
+import { invariant } from '../utils';
 import { NavigationScreenRouteConfig } from '../screens';
 import {
   NavigationChildRouters,
@@ -114,7 +115,7 @@ export function createPathParser(
     }
 
     if (pathPattern !== null && typeof pathPattern !== 'string') {
-      throw new Error(`Route path for ${routeName} must be specified as a string, or null.`);
+      invariant(false, `Route path for ${routeName} must be specified as a string, or null.`);
     }
 
     // the path may be specified as null, which is similar to empty string because

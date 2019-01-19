@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const tslib_1 = require("tslib");
 const React = tslib_1.__importStar(require("react"));
 const hoist_non_react_statics_1 = tslib_1.__importDefault(require("hoist-non-react-statics"));
+const utils_1 = require("../utils");
 const withNavigation_1 = tslib_1.__importDefault(require("./withNavigation"));
 ;
 const subscriptions = Symbol();
@@ -17,7 +18,7 @@ function withNavigationFocus(Component) {
         componentDidMount() {
             const { navigation } = this.props;
             if (!navigation) { /* tslint:disable-next-line:max-line-length */
-                throw new Error('withNavigationFocus can only be used on a view hierarchy of a navigator. The wrapped component is unable to get access to navigation from props or context.');
+                utils_1.invariant(false, 'withNavigationFocus can only be used on a view hierarchy of a navigator. The wrapped component is unable to get access to navigation from props or context.');
             }
             this[subscriptions] = [
                 navigation.addListener('didFocus', () => this.setState({ isFocused: true })),

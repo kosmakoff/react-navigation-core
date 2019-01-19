@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const tslib_1 = require("tslib");
 const React = tslib_1.__importStar(require("react"));
 const react_lifecycles_compat_1 = require("react-lifecycles-compat");
+const utils_1 = require("../utils");
 ;
 /**
  * Create Navigator
@@ -19,13 +20,13 @@ function createNavigator(NavigationView, router, navigationConfig = {}) {
         static getDerivedStateFromProps(nextProps, prevState) {
             const prevDescriptors = prevState.descriptors;
             const { navigation, screenProps } = nextProps;
-            if (navigation == null) { /* tslint:disable-next-line:max-line-length */
-                throw Error('The navigation prop is missing for this navigator. In react-navigation 3 you must set up your app container directly. More info: https://reactnavigation.org/docs/en/app-containers.html');
+            if (!navigation) { /* tslint:disable-next-line:max-line-length */
+                utils_1.invariant(false, 'The navigation prop is missing for this navigator. In react-navigation 3 you must set up your app container directly. More info: https://reactnavigation.org/docs/en/app-containers.html');
             }
             const { state } = navigation;
             const { routes } = state;
-            if (typeof routes === 'undefined') { /* tslint:disable-next-line:max-line-length */
-                throw new TypeError('No "routes" found in navigation state. Did you try to pass the navigation prop of a React component to a Navigator child? See https://reactnavigation.org/docs/en/custom-navigators.html#navigator-navigation-prop');
+            if (typeof routes === undefined) { /* tslint:disable-next-line:max-line-length */
+                utils_1.invariant(false, 'No "routes" found in navigation state. Did you try to pass the navigation prop of a React component to a Navigator child? See https://reactnavigation.org/docs/en/custom-navigators.html#navigator-navigation-prop');
             }
             const descriptors = {};
             routes.forEach(route => {

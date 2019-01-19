@@ -1,3 +1,4 @@
+import { invariant } from '../utils';
 import { NavigationScreenOptions } from '../screens';
 import { NavigationRoute } from '../types';
 
@@ -16,7 +17,8 @@ export default function validateScreenOptions(
   const deprecatedKey = keys.find(key => deprecatedKeys.includes(key));
 
   if (typeof screenOptions.title === 'function') {
-    throw new Error(
+    invariant(
+      false,
       [
         `\`title\` cannot be defined as a function in navigation options for \`${
           route.routeName
@@ -35,7 +37,8 @@ export default function validateScreenOptions(
   }
 
   if (deprecatedKey && typeof screenOptions[deprecatedKey] === 'function') {
-    throw new Error(
+    invariant(
+      false,
       [
         `\`${deprecatedKey}\` cannot be defined as a function in navigation options for \`${
           route.routeName
@@ -56,7 +59,8 @@ export default function validateScreenOptions(
   }
 
   if (deprecatedKey && typeof screenOptions[deprecatedKey] === 'object') {
-    throw new Error(
+    invariant(
+      false,
       [
         `Invalid key \`${deprecatedKey}\` defined in navigation options for \`${
           route.routeName

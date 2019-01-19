@@ -1,3 +1,4 @@
+import { invariant } from '../utils';
 import { createPathParser } from './pathUtils';
 import {
   createConfigGetter,
@@ -45,7 +46,8 @@ export function SwitchRouter<Actions extends NavigationSwitchRouterActionCreator
   const initialRouteName = config.initialRouteName || order[0];
   const initialRouteIndex = order.indexOf(initialRouteName);
   if (initialRouteIndex === -1) {
-    throw new Error(
+    invariant(
+      false,
       `Invalid initialRouteName '${initialRouteName}'.` +
         `Should be one of ${order.map(n => `"${n}"`).join(', ')}`
     );
@@ -347,8 +349,11 @@ export function SwitchRouter<Actions extends NavigationSwitchRouterActionCreator
       const activeChildRoute = state.routes[state.index];
       const { routeName } = activeChildRoute;
       if (!routeName) {
-        throw new Error(`There is no route defined for index ${state.index}. Check that
-        that you passed in a navigation state with a valid tab/screen index.`);
+        invariant(
+          false,
+          `There is no route defined for index ${state.index}. Check that
+          that you passed in a navigation state with a valid tab/screen index.`
+        );
       }
       const childRouter = childRouters[routeName];
       if (childRouter) {

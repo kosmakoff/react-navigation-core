@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const utils_1 = require("../utils");
 const pathUtils_1 = require("./pathUtils");
 const screens_1 = require("../screens");
 const actions_1 = require("../actions");
@@ -17,7 +18,7 @@ function SwitchRouter(routeConfigs, config = {}) {
     const initialRouteName = config.initialRouteName || order[0];
     const initialRouteIndex = order.indexOf(initialRouteName);
     if (initialRouteIndex === -1) {
-        throw new Error(`Invalid initialRouteName '${initialRouteName}'.` +
+        utils_1.invariant(false, `Invalid initialRouteName '${initialRouteName}'.` +
             `Should be one of ${order.map(n => `"${n}"`).join(', ')}`);
     }
     const childRouters = {};
@@ -225,8 +226,8 @@ function SwitchRouter(routeConfigs, config = {}) {
             const activeChildRoute = state.routes[state.index];
             const { routeName } = activeChildRoute;
             if (!routeName) {
-                throw new Error(`There is no route defined for index ${state.index}. Check that
-        that you passed in a navigation state with a valid tab/screen index.`);
+                utils_1.invariant(false, `There is no route defined for index ${state.index}. Check that
+          that you passed in a navigation state with a valid tab/screen index.`);
             }
             const childRouter = childRouters[routeName];
             if (childRouter) {

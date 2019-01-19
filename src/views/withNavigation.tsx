@@ -1,5 +1,6 @@
 import * as React from 'react';
 import hoistNonReactStatics from 'hoist-non-react-statics';
+import { invariant } from '../utils';
 import { NavigationContext } from '../context';
 import {
   NavigationInjectedProps,
@@ -21,7 +22,7 @@ export default function withNavigation<P extends object & NavigationInjectedProp
           {navigationContext => {
             const navigation = navigationProp || navigationContext;
             if (!navigation) { /* tslint:disable-next-line:max-line-length */
-              throw new Error('withNavigation can only be used on a view hierarchy of a navigator. The wrapped component is unable to get access to navigation from props or context.');
+              invariant(false, 'withNavigation can only be used on a view hierarchy of a navigator. The wrapped component is unable to get access to navigation from props or context.');
             }
             return (
               <Component

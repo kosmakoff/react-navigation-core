@@ -1,4 +1,5 @@
 import { isValidElementType } from 'react-is';
+import { invariant } from '../utils';
 import { NavigationRouteConfigMap } from '../types';
 import { NavigationRouteConfig } from '../screens';
 
@@ -8,7 +9,7 @@ import { NavigationRouteConfig } from '../screens';
  */
 export default function validateRouteConfigMap(routeConfigs: NavigationRouteConfigMap) {
   const routeNames = Object.keys(routeConfigs);
-  if (routeNames.length === 0) {
+  if (!routeNames.length) {
     throw new Error('Please specify at least one route when configuring a navigator.');
   }
 
@@ -20,25 +21,28 @@ export default function validateRouteConfigMap(routeConfigs: NavigationRouteConf
       !screenComponent ||
       (!isValidElementType(screenComponent) && !('getScreen' in routeConfig))
     ) {
-      throw new Error(`The component for route '${routeName}' must be a React component. For example:
-
-import MyScreen from './MyScreen';
-...
-${routeName}: MyScreen,
-}
-
-You can also use a navigator:
-
-import MyNavigator from './MyNavigator';
-...
-${routeName}: MyNavigator,
-}`);
+      invariant(
+        false,
+        [
+          `The component for route '${routeName}' must be a React component. For example:`,
+          '',
+          `import MyScreen from './MyScreen';`,
+          '...',
+          `${routeName}: MyScreen,`,
+          '}',
+          '',
+          'You can also use a navigator:',
+          '',
+          `import MyNavigator from './MyNavigator';`,
+          '...',
+          `${routeName}: MyNavigator,`,
+          '}',
+        ].join('\n')
+      );
     }
 
     if ('screen' in routeConfig && 'getScreen' in routeConfig) {
-      throw new Error(
-        `Route '${routeName}' should declare a screen or a getScreen, not both.`
-      );
+      throw new Error(`Route '${routeName}' should declare a screen or a getScreen, not both.`);
     }
   });
 }

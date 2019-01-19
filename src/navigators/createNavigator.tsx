@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { polyfill } from 'react-lifecycles-compat';
+import { invariant } from '../utils';
 import { NavigationRouter } from '../routers';
 import { NavigationState } from '../types';
 import {
@@ -44,14 +45,14 @@ export function createNavigator<
     static getDerivedStateFromProps(nextProps: Props, prevState: StateHOC) {
       const prevDescriptors = prevState.descriptors;
       const { navigation, screenProps } = nextProps;
-      if (navigation == null) { /* tslint:disable-next-line:max-line-length */
-        throw Error('The navigation prop is missing for this navigator. In react-navigation 3 you must set up your app container directly. More info: https://reactnavigation.org/docs/en/app-containers.html');
+      if (!navigation) { /* tslint:disable-next-line:max-line-length */
+        invariant(false, 'The navigation prop is missing for this navigator. In react-navigation 3 you must set up your app container directly. More info: https://reactnavigation.org/docs/en/app-containers.html');
       }
 
       const { state } = navigation;
       const { routes } = state;
-      if (typeof routes === 'undefined') { /* tslint:disable-next-line:max-line-length */
-        throw new TypeError('No "routes" found in navigation state. Did you try to pass the navigation prop of a React component to a Navigator child? See https://reactnavigation.org/docs/en/custom-navigators.html#navigator-navigation-prop');
+      if (typeof routes === undefined) { /* tslint:disable-next-line:max-line-length */
+        invariant(false, 'No "routes" found in navigation state. Did you try to pass the navigation prop of a React component to a Navigator child? See https://reactnavigation.org/docs/en/custom-navigators.html#navigator-navigation-prop');
       }
 
       const descriptors = {};
