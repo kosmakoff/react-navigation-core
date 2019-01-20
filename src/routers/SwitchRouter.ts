@@ -1,4 +1,4 @@
-import { invariant } from '../utils';
+import invariant from 'invariant';
 import { createPathParser } from './pathUtils';
 import {
   createConfigGetter,

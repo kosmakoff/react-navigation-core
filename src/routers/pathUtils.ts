@@ -1,6 +1,6 @@
 import pathToRegexp, { compile } from 'path-to-regexp';
 import queryString from 'query-string';
-import { invariant } from '../utils';
+import invariant from 'invariant';
 import { NavigationScreenRouteConfig } from '../screens';
 import {
   NavigationChildRouters,

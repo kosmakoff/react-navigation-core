@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const utils_1 = require("../utils");
+const tslib_1 = require("tslib");
+const invariant_1 = tslib_1.__importDefault(require("invariant"));
 const deprecatedKeys = ['tabBar'];
 /**
  * Make sure screen options returned by the `getScreenOption`
@@ -10,7 +11,7 @@ function validateScreenOptions(screenOptions, route) {
     const keys = Object.keys(screenOptions);
     const deprecatedKey = keys.find(key => deprecatedKeys.includes(key));
     if (typeof screenOptions.title === 'function') {
-        utils_1.invariant(false, [
+        invariant_1.default(false, [
             `\`title\` cannot be defined as a function in navigation options for \`${route.routeName}\` screen. \n`,
             'Try replacing the following:',
             '{',
@@ -24,7 +25,7 @@ function validateScreenOptions(screenOptions, route) {
         ].join('\n'));
     }
     if (deprecatedKey && typeof screenOptions[deprecatedKey] === 'function') {
-        utils_1.invariant(false, [
+        invariant_1.default(false, [
             `\`${deprecatedKey}\` cannot be defined as a function in navigation options for \`${route.routeName}\` screen. \n`,
             'Try replacing the following:',
             '{',
@@ -40,7 +41,7 @@ function validateScreenOptions(screenOptions, route) {
         ].join('\n'));
     }
     if (deprecatedKey && typeof screenOptions[deprecatedKey] === 'object') {
-        utils_1.invariant(false, [
+        invariant_1.default(false, [
             `Invalid key \`${deprecatedKey}\` defined in navigation options for \`${route.routeName}\` screen.`,
             '\n',
             'Try replacing the following navigation options:',

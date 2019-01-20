@@ -32,7 +32,9 @@ export declare type NavigationScreenProp<State = NavigationState, P = Navigation
 };
 export declare type NavigationScreenOptionsGetter<State, Options = NavigationScreenOptions> = (navigation: NavigationScreenPropBase<State>, screenProps?: NavigationComponentScreenProps) => Options | null | undefined;
 export declare type NavigationRouteConfig = NavigationComponent | NavigationScreenRouteConfig;
-export declare type NavigationComponent<State = any> = NavigationScreenComponent<State> | NavigationNavigator<State>;
+export declare type NavigationComponent<State = any, Options = NavigationScreenOptions> = (NavigationScreenComponent<State, Options> | NavigationNavigator<State, Options>) & {
+    navigationOptions?: NavigationScreenConfig<State, Options>;
+};
 export declare type NavigationScreenRouteConfig<Params = NavigationParams, Options = NavigationScreenOptions> = ({
     screen: NavigationComponent;
 } | {
@@ -42,26 +44,22 @@ export declare type NavigationScreenRouteConfig<Params = NavigationParams, Optio
     path?: string | null;
     params?: Params;
 };
-export declare type NavigationScreenComponent<State, Options = NavigationScreenOptions, Props = {}> = React.ComponentType<NavigationScreenProps<State, Options> & Props> & {
-    navigationOptions?: NavigationScreenConfig<State, Options>;
-};
-export declare type NavigationNavigator<State = NavigationState, Options = NavigationScreenOptions, Props extends object = {}> = React.ComponentType<Props & NavigationNavigatorProps<State, Options>> & {
+export declare type NavigationScreenComponent<State, Options = NavigationScreenOptions, Props extends object = {}> = React.ComponentType<Props & NavigationScreenProps<State, Options>>;
+export declare type NavigationNavigator<State, Options, Props extends NavigationNavigatorProps<State, Options> = NavigationNavigatorProps<State, Options>> = React.ComponentType<{} & Props> & {
     router: NavigationRouter<State, Options, any>;
-    navigationOptions?: NavigationScreenConfig<State, Options>;
 };
 export interface NavigationScreenProps<State, Options = NavigationScreenOptions> {
     navigation?: NavigationScreenProp<State>;
     screenProps?: NavigationComponentScreenProps;
     navigationOptions?: NavigationScreenConfig<State, Options>;
 }
-export interface NavigationNavigatorProps<State, Options = NavigationScreenOptions> {
+export interface NavigationNavigatorProps<State, Options> {
     navigation: NavigationScreenProp<State>;
     screenProps: NavigationComponentScreenProps;
-    navigationOptions?: NavigationScreenConfig<State, Options>;
 }
-export interface NavigationComponentProps<State> {
-    navigation: NavigationScreenProp<State>;
-    screenProps: NavigationComponentScreenProps;
+export interface NavigationComponentProps<State, Options> {
+    navigation: NavigationScreenProp<State, Options>;
+    screenProps?: NavigationComponentScreenProps;
 }
 export interface NavigationScreenConfigParams<State, Options = NavigationScreenOptions> {
     navigation: NavigationScreenPropBase<State>;

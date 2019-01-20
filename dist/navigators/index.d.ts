@@ -5,14 +5,14 @@ export interface NavigationDescriptor<State = NavigationState, Options = Navigat
     key: string;
     state: State;
     navigation: NavigationScreenProp<State, Options, Actions>;
-    getComponent: () => React.ComponentType<NavigationComponentProps<State>>;
+    getComponent: () => React.ComponentType<NavigationComponentProps<State, Options>>;
     options?: Options;
 }
-export declare type NavigationView<State, Options, Props extends object = {}> = React.ComponentType<Props & NavigationViewProps<State, Options>>;
+export declare type NavigationView<State, Options, Props extends NavigationViewProps<State, Options> = NavigationViewProps<State, Options>> = React.ComponentType<{} & Props>;
 export interface NavigationViewProps<State, Options> {
     navigation: NavigationScreenProp<State, Options>;
-    screenProps: NavigationComponentScreenProps;
-    navigationConfig: NavigationConfig<State, Options>;
+    screenProps?: NavigationComponentScreenProps;
+    navigationConfig?: NavigationConfig<State, Options>;
     descriptors: {
         [key: string]: NavigationDescriptor<State, Options>;
     };

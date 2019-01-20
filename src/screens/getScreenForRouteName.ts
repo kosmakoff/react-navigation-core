@@ -1,5 +1,5 @@
 import { isValidElementType } from 'react-is';
-import { invariant } from '../utils';
+import invariant from 'invariant';
 import { NavigationComponent } from '../screens';
 import { NavigationRouteConfigMap } from '../types';
 

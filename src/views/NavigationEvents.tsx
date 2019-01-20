@@ -17,7 +17,7 @@ const EventNameToPropName: { [key in NavigationViewEventType]: NavigationEventTy
 
 const subscriptions = Symbol();
 
-class NavigationEvents extends React.Component<Partial<NavigationEventsProps<any>>> {
+class NavigationEvents extends React.Component<NavigationEventsProps<any, any>> {
   [subscriptions]: {
     [event in NavigationViewEventType]: NavigationEventSubscription;
   }
@@ -32,7 +32,7 @@ class NavigationEvents extends React.Component<Partial<NavigationEventsProps<any
     // A former implementation was replacing (removing/adding) listeners on all update (if prop provided)
     // but there were issues (see https://github.com/react-navigation/react-navigation/issues/5058)
     EventNames.forEach(eventName => {
-      this[subscriptions][eventName] = this.props.navigation!.addListener(
+      this[subscriptions][eventName] = this.props.navigation.addListener(
         eventName,
         (...args: any[]) => {
           const propListener = this.getPropListener(eventName) as ((...args: any[]) => void) | undefined;

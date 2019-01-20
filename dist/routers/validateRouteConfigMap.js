@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const tslib_1 = require("tslib");
 const react_is_1 = require("react-is");
-const utils_1 = require("../utils");
+const invariant_1 = tslib_1.__importDefault(require("invariant"));
 /**
  * Make sure the config passed e.g. to StackRouter, TabRouter has
  * the correct format, and throw a clear error if it doesn't.
@@ -16,7 +17,7 @@ function validateRouteConfigMap(routeConfigs) {
         const screenComponent = getScreenComponent(routeConfig);
         if (!screenComponent ||
             (!react_is_1.isValidElementType(screenComponent) && !('getScreen' in routeConfig))) {
-            utils_1.invariant(false, [
+            invariant_1.default(false, [
                 `The component for route '${routeName}' must be a React component. For example:`,
                 '',
                 `import MyScreen from './MyScreen';`,

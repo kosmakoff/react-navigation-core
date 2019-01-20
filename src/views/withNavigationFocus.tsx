@@ -1,6 +1,6 @@
 import * as React from 'react';
 import hoistNonReactStatics from 'hoist-non-react-statics';
-import { invariant } from '../utils';
+import invariant from 'invariant';
 import withNavigation from './withNavigation';
 import { NavigationEventSubscription } from '../types';
 import {
@@ -8,19 +8,19 @@ import {
   NavigationOnRefInjectedProps
 } from '../views';
 
-interface StateHOC {
-  isFocused: boolean;
-};
-
 const subscriptions = Symbol();
 
-export default function withNavigationFocus<P extends object & NavigationFocusInjectedProps<any>>(
+export default function withNavigationFocus<P extends NavigationFocusInjectedProps<any>>(
   Component: React.ComponentType<P>
 ): React.ComponentClass<P & NavigationOnRefInjectedProps<P, typeof Component>> {
-  class ComponentWithNavigationFocus extends React.Component<
-    P & NavigationOnRefInjectedProps<P, typeof Component>, StateHOC
-  > {
-    constructor(props: P & NavigationOnRefInjectedProps<P, typeof Component>) {
+
+  interface StateHOC {
+    isFocused: boolean;
+  };
+  type Props = P & NavigationOnRefInjectedProps<P, typeof Component>
+
+  class ComponentWithNavigationFocus extends React.Component<Props, StateHOC> {
+    constructor(props: Props) {
       super(props);
 
       this.state = {

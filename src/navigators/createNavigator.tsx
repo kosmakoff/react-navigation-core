@@ -1,38 +1,36 @@
 import * as React from 'react';
 import { polyfill } from 'react-lifecycles-compat';
-import { invariant } from '../utils';
+import invariant from 'invariant';
 import { NavigationRouter } from '../routers';
-import { NavigationState } from '../types';
+import { NavigationView } from '../navigators';
+import {
+  Include,
+  InferProps,
+  NavigationState
+} from '../types';
 import {
   NavigationConfig,
   NavigationScreenOptions,
   NavigationNavigator,
-  NavigationNavigatorProps,
-  NavigationComponentScreenProps
+  NavigationNavigatorProps
 } from '../screens';
-import {
-  NavigationView,
-  NavigationDescriptor
-} from '../navigators';
-
-interface StateHOC {
-  descriptors: { [key: string]: NavigationDescriptor };
-  screenProps?: NavigationComponentScreenProps;
-};
 
 /**
  * Create Navigator
  */
 export function createNavigator<
-  Props extends object & NavigationNavigatorProps<State, Options>,
+  Props extends NavigationNavigatorProps<State, Options>,
   State extends NavigationState,
   Options = NavigationScreenOptions,
   Actions = {}
 >(
-  NavigationView: NavigationView<State, Options, Props>,
+  NavigationView: NavigationView<State, Options>,
   router: NavigationRouter<State, Options, Actions>,
   navigationConfig: NavigationConfig<State, Options> = {}
 ): NavigationNavigator<State, Options, Props> {
+
+  type StateHOC = Include<InferProps<typeof NavigationView>, 'descriptors' | 'screenProps'>;
+
   class Navigator extends React.Component<Props, StateHOC> {
     static router = router;
     static navigationOptions = navigationConfig.navigationOptions;
@@ -61,7 +59,7 @@ export function createNavigator<
         if (
           prevDescriptors &&
           prevDescriptors[route.key] &&
-          route === prevDescriptors[route.key].state &&
+          (route as NavigationState) === prevDescriptors[route.key].state &&
           screenProps === prevState.screenProps
         ) {
           descriptors[route.key] = prevDescriptors[route.key];

@@ -41,10 +41,12 @@
   "homepage": "https://github.com/react-navigation/react-navigation-core#readme",
   "dependencies": {
     "@types/hoist-non-react-statics": "^3.0.1",
+    "@types/invariant": "^2.2.29",
     "@types/query-string": "^6.2.0",
     "@types/react-lifecycles-compat": "^3.0.0",
     "create-react-context": "0.2.2",
     "hoist-non-react-statics": "^3.2.1",
+    "invariant": "^2.2.4",
     "path-to-regexp": "^1.7.0",
     "query-string": "^6.2.0",
     "react-is": "^16.7.0",

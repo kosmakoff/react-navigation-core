@@ -81,7 +81,7 @@ describe('NavigationEvents', () => {
     } = createTestNavigationAndHelpers();
     const component = renderer.create(
       <NavigationContext.Provider value={navigation}>
-        <NavigationEvents/>
+        <NavigationEvents />
       </NavigationContext.Provider>
     );
 

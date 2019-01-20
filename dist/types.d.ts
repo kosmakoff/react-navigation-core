@@ -1,3 +1,4 @@
+/// <reference types="react" />
 import { NavigationAction } from './actions';
 import { NavigationRouteConfig } from './screens';
 import { NavigationEventType } from './views/events';
@@ -81,3 +82,6 @@ export interface NavigationEventSubscriber {
 export interface NavigationEventSubscription {
     remove: () => void;
 }
+export declare type InferProps<T extends React.ComponentType<any>> = T extends React.ComponentType<infer P> ? P : never;
+export declare type Include<T, K extends keyof any> = Pick<T, Extract<keyof T, K>>;
+export declare type Omit<T, K extends keyof any> = Pick<T, Exclude<keyof T, K>>;
