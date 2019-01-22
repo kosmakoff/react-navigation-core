@@ -1,5 +1,5 @@
-import { NavigationParams } from '../types';
-import { NavigationNavigateAction } from '../actions';
+type NavigationNavigateAction = import('../actions').NavigationNavigateAction;
+type NavigationParams = import('../types').NavigationParams;
 
 const POP = 'Navigation/POP' as 'Navigation/POP';
 const POP_TO_TOP = 'Navigation/POP_TO_TOP' as 'Navigation/POP_TO_TOP';
@@ -102,7 +102,7 @@ const completeTransition = (
   ...payload,
 });
 
-export const StackActions = {
+export const StackActions = Object.freeze({
   // Action creators
   pop,
   popToTop,
@@ -118,4 +118,4 @@ export const StackActions = {
   RESET,
   REPLACE,
   COMPLETE_TRANSITION,
-};
+});

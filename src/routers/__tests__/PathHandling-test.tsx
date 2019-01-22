@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { NavigationNavigateAction, NavigationActions } from '../../actions';
+import { NavigationActions } from '../../actions';
 import { _TESTING_ONLY_normalize_keys } from '../KeyGenerator';
 
 import { TabRouter } from '../TabRouter';
@@ -576,7 +576,7 @@ test('Handles nested switch routers', () => {
     D: AScreen,
   });
   const action = router.getActionForPathAndParams('docs/B', {}) as
-    NavigationNavigateAction;
+    import('../../actions').NavigationNavigateAction;
 
   expect(action.type).toEqual(NavigationActions.NAVIGATE);
   expect(action.routeName).toEqual('Docs');

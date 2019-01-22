@@ -42,7 +42,7 @@ const setParams = (payload) => ({
     key: payload.key,
     params: payload.params,
 });
-exports.NavigationActions = {
+exports.NavigationActions = Object.freeze({
     // Action creators
     back,
     init,
@@ -53,5 +53,5 @@ exports.NavigationActions = {
     INIT,
     NAVIGATE,
     SET_PARAMS,
-};
+});
 //# sourceMappingURL=NavigationActions.js.map

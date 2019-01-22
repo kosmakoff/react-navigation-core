@@ -1,18 +1,12 @@
-
 import withDefaultValue from '../utils/withDefaultValue';
-import {
-  NavigationState,
-  NavigationRouteConfigMap
-} from '../types';
-import {
-  NavigationTabRouterConfig,
-  SwitchRouter
-} from '../routers';
+import { SwitchRouter } from '../routers';
+
+type NavigationState = import('../types').NavigationState;
 
 /* tslint:disable:no-parameter-reassignment */
 export function TabRouter(
-  routeConfigs: NavigationRouteConfigMap,
-  config: NavigationTabRouterConfig<NavigationState> = {} as any
+  routeConfigs: import('../types').NavigationRouteConfigMap,
+  config: import('../routers').NavigationTabRouterConfig<NavigationState> = {} as any
 ) {
   config = { ...config };
   config = withDefaultValue(config, 'resetOnBlur', false);
@@ -20,4 +14,4 @@ export function TabRouter(
 
   const switchRouter = SwitchRouter(routeConfigs, config);
   return switchRouter;
-};
+}

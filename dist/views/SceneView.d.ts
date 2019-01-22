@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { NavigationSceneViewProps } from '../views';
+declare type NavigationSceneViewProps<S, O> = import('../views').NavigationSceneViewProps<S, O>;
 export default class SceneView extends React.PureComponent<NavigationSceneViewProps<any, any>> {
     render(): JSX.Element;
 }
+export {};

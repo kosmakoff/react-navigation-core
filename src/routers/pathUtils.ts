@@ -1,21 +1,11 @@
 import pathToRegexp, { compile } from 'path-to-regexp';
 import queryString from 'query-string';
 import invariant from 'invariant';
-import { NavigationScreenRouteConfig } from '../screens';
-import {
-  NavigationChildRouters,
-  NavigationRouterConfig
-} from '../routers';
-import {
-  NavigationActions,
-  NavigationNavigateAction,
-} from '../actions';
-import {
-  NavigationParams,
-  NavigationRoute,
-  NavigationRouteConfigMap,
-  NavigationStateRoute
-} from '../types';
+import { NavigationActions } from '../actions';
+
+type NavigationNavigateAction = import('../actions').NavigationNavigateAction;
+type NavigationScreenRouteConfig = import('../screens').NavigationScreenRouteConfig;
+type NavigationStateRoute = import('../types').NavigationStateRoute;
 
 interface PathParsed {
   exactRe: pathToRegexp.PathRegExp | null;
@@ -23,7 +13,7 @@ interface PathParsed {
   extendedPathRe: pathToRegexp.PathRegExp | null;
   extendedPathReKeys: pathToRegexp.Key[];
   isWildcard: boolean;
-  toPath: (params?: NavigationParams) => string;
+  toPath: (params?: import('../types').NavigationParams) => string;
 };
 
 export function getParamsFromPath(
@@ -86,9 +76,9 @@ export function urlToPathAndParams(url: string, uriPrefix?: string) {
 };
 
 export function createPathParser(
-  childRouters: NavigationChildRouters<any>,
-  routeConfigs: NavigationRouteConfigMap,
-  routerConfig: NavigationRouterConfig<any>
+  childRouters: import('../routers').NavigationChildRouters<any>,
+  routeConfigs: import('../types').NavigationRouteConfigMap,
+  routerConfig: import('../routers').NavigationRouterConfig<any>
  ) {
   const pathConfigs = routerConfig.paths || {};
   const { disableRouteNamePaths } = routerConfig;
@@ -214,7 +204,7 @@ export function createPathParser(
     return null;
   };
 
-  function getPathAndParamsForRoute(route: NavigationRoute) {
+  function getPathAndParamsForRoute(route: import('../types').NavigationRoute) {
     const { routeName, params } = route;
     const childRouter = childRouters[routeName];
     const { toPath, exactReKeys } = pathsByRouteNames[routeName];

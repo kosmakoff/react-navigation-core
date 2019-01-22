@@ -1,6 +1,7 @@
 import * as React from 'react';
-import { NavigationState } from '../../types';
-import { NavigationSwitchViewProps } from '../';
+declare type NavigationState = import('../../types').NavigationState;
+declare type NavigationSwitchViewProps<S, O> = import('../').NavigationSwitchViewProps<S, O>;
 export default class SwitchView extends React.Component<NavigationSwitchViewProps<NavigationState, any>> {
     render(): JSX.Element;
 }
+export {};

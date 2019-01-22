@@ -1,1 +1,1 @@
-{"version":3,"file":"NavigationContext.js","sourceRoot":"","sources":["../../src/context/NavigationContext.ts"],"names":[],"mappings":";;;AAAA,wFAAsD;AAGzC,QAAA,iBAAiB,GAC5B,8BAAkB,CAA4B,SAAgB,CAAC,CAAC"}
+{"version":3,"file":"NavigationContext.js","sourceRoot":"","sources":["../../src/context/NavigationContext.ts"],"names":[],"mappings":";;;AAAA,wFAAsD;AAEzC,QAAA,iBAAiB,GAC5B,8BAAkB,CAAiD,SAAgB,CAAC,CAAC"}

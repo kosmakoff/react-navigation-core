@@ -1,5 +1,4 @@
-import { NavigationParams } from '../types';
-import { NavigationNavigateAction } from '../actions';
+type NavigationParams = import('../types').NavigationParams;
 
 const BACK = 'Navigation/BACK' as 'Navigation/BACK';
 const INIT = 'Navigation/INIT' as 'Navigation/INIT';
@@ -91,7 +90,7 @@ const setParams = (payload: NavigationSetParamsActionPayload): NavigationSetPara
   params: payload.params,
 });
 
-export const NavigationActions = {
+export const NavigationActions = Object.freeze({
   // Action creators
   back,
   init,
@@ -103,4 +102,4 @@ export const NavigationActions = {
   INIT,
   NAVIGATE,
   SET_PARAMS,
-};
+});

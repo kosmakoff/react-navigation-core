@@ -1,6 +1,4 @@
 import invariant from 'invariant';
-import { NavigationScreenOptions } from '../screens';
-import { NavigationRoute } from '../types';
 
 const deprecatedKeys = ['tabBar'];
 
@@ -9,8 +7,8 @@ const deprecatedKeys = ['tabBar'];
  * are valid
  */
 export default function validateScreenOptions(
-  screenOptions: NavigationScreenOptions,
-  route: NavigationRoute
+  screenOptions: import('../screens').NavigationScreenOptions,
+  route: import('../types').NavigationRoute
 ): void {
   const keys = Object.keys(screenOptions);
 

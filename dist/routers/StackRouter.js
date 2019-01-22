@@ -4,9 +4,9 @@ const tslib_1 = require("tslib");
 const StateUtils_1 = tslib_1.__importDefault(require("../StateUtils"));
 const KeyGenerator_1 = require("./KeyGenerator");
 const pathUtils_1 = require("./pathUtils");
-const screens_1 = require("../screens");
 const routers_1 = require("../routers");
 const actions_1 = require("../actions");
+const screens_1 = require("../screens");
 const defaultActionCreators = () => ({});
 function behavesLikePushAction(action) {
     return (action.type === actions_1.NavigationActions.NAVIGATE ||

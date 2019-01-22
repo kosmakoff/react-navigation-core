@@ -1,5 +1,4 @@
 import createReactContext from 'create-react-context';
-import { NavigationScreenProp } from '../screens';
 
 export const NavigationContext =
-  createReactContext<NavigationScreenProp<any>>(undefined as any);
+  createReactContext<import('../screens').NavigationScreenProp<any>>(undefined as any);

@@ -12,5 +12,4 @@ function TabRouter(routeConfigs, config = {}) {
     return switchRouter;
 }
 exports.TabRouter = TabRouter;
-;
 //# sourceMappingURL=TabRouter.js.map

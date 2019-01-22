@@ -1,14 +1,12 @@
 import { isValidElementType } from 'react-is';
 import invariant from 'invariant';
-import { NavigationComponent } from '../screens';
-import { NavigationRouteConfigMap } from '../types';
 
 /**
  * Simple helper that gets a single screen (React component or navigator)
  * out of the navigator config.
  */
 export default function getScreenForRouteName(
-  routeConfigs: NavigationRouteConfigMap,
+  routeConfigs: import('../types').NavigationRouteConfigMap,
   routeName: string
 ) {
   const routeConfig = routeConfigs[routeName];
@@ -43,5 +41,5 @@ export default function getScreenForRouteName(
     return screen;
   }
 
-  return routeConfig as NavigationComponent<any>;
+  return routeConfig as import('../screens').NavigationComponent<any>;
 }

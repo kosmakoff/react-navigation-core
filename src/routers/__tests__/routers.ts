@@ -2,9 +2,6 @@ import { TabRouter as TabRouterTest } from '../TabRouter';
 import { StackRouter as StackRouterTest } from '../StackRouter';
 import { SwitchRouter as SwitchRouterTest } from '../SwitchRouter';
 
-import { NavigationRouter } from '..';
-import { NavigationRouteConfigMap } from '../../types';
-
 interface TestNavigationState {
   key?: string;
   index?: number;
@@ -14,8 +11,10 @@ interface TestNavigationState {
   routes?: TestNavigationState[];
 };
 
-type Router =
-  (routeConfigs: NavigationRouteConfigMap, config?: any) => NavigationRouter<TestNavigationState>;
+type Router = (
+  routeConfigs: import('../../types').NavigationRouteConfigMap,
+  config?: any
+) => import('..').NavigationRouter<TestNavigationState>;
 
 export const TabRouter = TabRouterTest as Router;
 export const StackRouter = StackRouterTest as Router;

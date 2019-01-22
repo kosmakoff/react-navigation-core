@@ -12,7 +12,7 @@ const push = (payload) => (Object.assign({ type: PUSH }, payload));
 const reset = (payload) => (Object.assign({ type: RESET }, payload));
 const replace = (payload) => (Object.assign({ type: REPLACE }, payload));
 const completeTransition = (payload) => (Object.assign({ type: 'Navigation/COMPLETE_TRANSITION' }, payload));
-exports.StackActions = {
+exports.StackActions = Object.freeze({
     // Action creators
     pop,
     popToTop,
@@ -27,5 +27,5 @@ exports.StackActions = {
     RESET,
     REPLACE,
     COMPLETE_TRANSITION,
-};
+});
 //# sourceMappingURL=StackActions.js.map

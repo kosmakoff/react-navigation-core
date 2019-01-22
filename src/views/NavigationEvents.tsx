@@ -1,12 +1,10 @@
 import * as React from 'react';
 import withNavigation from './withNavigation';
-import { NavigationEventsProps } from '.';
-import { NavigationEventSubscription } from '../types';
-import {
-  NavigationEventTypeProps,
-  NavigationViewEventType,
-  NavigationViewEVENTNames as EventNames,
-} from './events';
+import { NavigationViewEVENTNames as EventNames } from './events';
+
+type NavigationEventsProps<S, O> = import('.').NavigationEventsProps<S, O>;
+type NavigationViewEventType = import('./events').NavigationViewEventType;
+type NavigationEventTypeProps = import('./events').NavigationEventTypeProps;
 
 const EventNameToPropName: { [key in NavigationViewEventType]: NavigationEventTypeProps } = {
   willFocus: 'onWillFocus',
@@ -19,7 +17,7 @@ const subscriptions = Symbol();
 
 class NavigationEvents extends React.Component<NavigationEventsProps<any, any>> {
   [subscriptions]: {
-    [event in NavigationViewEventType]: NavigationEventSubscription;
+    [event in NavigationViewEventType]: import('../types').NavigationEventSubscription;
   }
 
   getPropListener = (eventName: NavigationViewEventType) =>
@@ -35,7 +33,8 @@ class NavigationEvents extends React.Component<NavigationEventsProps<any, any>> 
       this[subscriptions][eventName] = this.props.navigation.addListener(
         eventName,
         (...args: any[]) => {
-          const propListener = this.getPropListener(eventName) as ((...args: any[]) => void) | undefined;
+          const propListener =
+            this.getPropListener(eventName) as ((...args: any[]) => void) | undefined;
           return propListener && propListener(...args);
         }
       );

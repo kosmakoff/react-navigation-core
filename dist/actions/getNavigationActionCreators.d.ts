@@ -1,3 +1,1 @@
-import { NavigationParams, NavigationRoute } from '../types';
-import { NavigationActionCreators } from '../actions';
-export declare function getNavigationActionCreators<Params = NavigationParams>(route: NavigationRoute): NavigationActionCreators<Params>;
+export declare function getNavigationActionCreators<Params = import('../types').NavigationParams>(route: import('../types').NavigationRoute): import('../actions').NavigationActionCreators<Params>;

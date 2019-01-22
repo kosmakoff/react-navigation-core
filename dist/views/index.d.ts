@@ -16,7 +16,7 @@ export declare type NavigationEventsProps<State, Options> = ViewProps & {
     [K in NavigationEventTypeProps]?: NavigationEventCallback;
 };
 export interface NavigationInjectedProps<State> {
-    navigation?: NavigationScreenProp<State>;
+    navigation: NavigationScreenProp<State>;
 }
 export interface NavigationFocusInjectedProps<State> extends NavigationInjectedProps<State> {
     isFocused: boolean;

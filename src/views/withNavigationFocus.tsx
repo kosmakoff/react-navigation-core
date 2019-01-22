@@ -2,11 +2,12 @@ import * as React from 'react';
 import hoistNonReactStatics from 'hoist-non-react-statics';
 import invariant from 'invariant';
 import withNavigation from './withNavigation';
-import { NavigationEventSubscription } from '../types';
-import {
-  NavigationFocusInjectedProps,
-  NavigationOnRefInjectedProps
-} from '../views';
+
+type NavigationFocusInjectedProps<S> =
+  import('../views').NavigationFocusInjectedProps<S>;
+
+type NavigationOnRefInjectedProps<P, T> =
+  import('../views').NavigationOnRefInjectedProps<P, T>;
 
 const subscriptions = Symbol();
 
@@ -31,7 +32,7 @@ export default function withNavigationFocus<P extends NavigationFocusInjectedPro
     static displayName = `withNavigationFocus(${Component.displayName ||
       Component.name})`;
 
-    [subscriptions]: NavigationEventSubscription[];
+    [subscriptions]: Array<import('../types').NavigationEventSubscription>;
 
     componentDidMount() {
       const { navigation } = this.props;
@@ -40,10 +41,10 @@ export default function withNavigationFocus<P extends NavigationFocusInjectedPro
       }
 
       this[subscriptions] = [
-        navigation!.addListener('didFocus', () =>
+        navigation.addListener('didFocus', () =>
           this.setState({ isFocused: true })
         ),
-        navigation!.addListener('willBlur', () =>
+        navigation.addListener('willBlur', () =>
           this.setState({ isFocused: false })
         ),
       ];

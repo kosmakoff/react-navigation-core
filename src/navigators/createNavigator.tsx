@@ -1,19 +1,11 @@
 import * as React from 'react';
 import { polyfill } from 'react-lifecycles-compat';
 import invariant from 'invariant';
-import { NavigationRouter } from '../routers';
-import { NavigationView } from '../navigators';
-import {
-  Include,
-  InferProps,
-  NavigationState
-} from '../types';
-import {
-  NavigationConfig,
-  NavigationScreenOptions,
-  NavigationNavigator,
-  NavigationNavigatorProps
-} from '../screens';
+
+type NavigationState = import('../types').NavigationState;
+type NavigationScreenOptions = import('../screens').NavigationScreenOptions;
+type NavigationNavigatorProps<S, O> =
+  import('../screens').NavigationNavigatorProps<S, O>;
 
 /**
  * Create Navigator
@@ -24,12 +16,15 @@ export function createNavigator<
   Options = NavigationScreenOptions,
   Actions = {}
 >(
-  NavigationView: NavigationView<State, Options>,
-  router: NavigationRouter<State, Options, Actions>,
-  navigationConfig: NavigationConfig<State, Options> = {}
-): NavigationNavigator<State, Options, Props> {
+  NavigationView: import('../navigators').NavigationView<State, Options>,
+  router: import('../routers').NavigationRouter<State, Options, Actions>,
+  navigationConfig: import('../screens').NavigationConfig<State, Options> = {}
+): import('../screens').NavigationNavigator<State, Options, Props> {
 
-  type StateHOC = Include<InferProps<typeof NavigationView>, 'descriptors' | 'screenProps'>;
+  type StateHOC = import('../types').Include<
+    import('../types').InferProps<typeof NavigationView>,
+    'descriptors' | 'screenProps'
+  >;
 
   class Navigator extends React.Component<Props, StateHOC> {
     static router = router;

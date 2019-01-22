@@ -1,14 +1,8 @@
-import {
-  NavigationState,
-  NavigationEventCallback,
-  NavigationEventPayload,
-  NavigationEventSubscriber,
-  NavigationAddListenerEventCallback
-} from './types';
-import {
-  NavigationEventType,
-  NavigationEVENTNames as upstreamEvents
-} from './views/events';
+import { NavigationEVENTNames as upstreamEvents } from './views/events';
+
+type NavigationState =  import('./types').NavigationState;
+type NavigationEventPayload = import('./types').NavigationEventPayload;
+type NavigationEventType = import('./views/events').NavigationEventType;
 
 /*
  * This is used to extract one children's worth of events from a stream of navigation action events
@@ -17,10 +11,10 @@ import {
  * focus and blur events for this child
  */
 export default function getChildEventSubscriber(
-  addListener: NavigationAddListenerEventCallback,
+  addListener: import('./types').NavigationAddListenerEventCallback,
   key: string,
   initialLastFocusEvent: NavigationEventType = 'didBlur'
-): NavigationEventSubscriber {
+): import('./types').NavigationEventSubscriber {
   const actionSubscribers = new Set();
   const willFocusSubscribers = new Set();
   const didFocusSubscribers = new Set();
@@ -174,7 +168,10 @@ export default function getChildEventSubscriber(
   );
 
   return {
-    addListener(eventName: NavigationEventType, eventHandler: NavigationEventCallback) {
+    addListener(
+      eventName: NavigationEventType,
+      eventHandler: import('./types').NavigationEventCallback
+    ) {
       const subscribers = getChildSubscribers(eventName);
       if (!subscribers) {
         throw new Error(`Invalid event name "${eventName}"`);

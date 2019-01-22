@@ -1,21 +1,15 @@
 import validateScreenOptions from './validateScreenOptions';
-import { NavigationRouteConfigMap } from '../types';
-import {
-  getScreenForRouteName,
-  NavigationScreenConfig,
-  NavigationScreenConfigParams,
-  NavigationScreenOptions,
-  NavigationScreenOptionsGetter,
-  NavigationScreenPropBase,
-  NavigationComponentScreenProps
-} from '../screens';
+import { getScreenForRouteName } from '../screens';
 
-type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
+type NavigationScreenOptions = import('../screens').NavigationScreenOptions;
 
 function applyConfig<Options extends NavigationScreenOptions>(
-  configurer: NavigationScreenConfig<any, Options> | null | undefined,
+  configurer: import('../screens').NavigationScreenConfig<any, Options> | null | undefined,
   navigationOptions: Options,
-  configProps: Omit<NavigationScreenConfigParams<any, Options>, 'navigationOptions'>
+  configProps: import('../types').Omit<
+    import('../screens').NavigationScreenConfigParams<any, Options>,
+    'navigationOptions'
+  >
 ): NavigationScreenOptions {
   if (typeof configurer === 'function') {
     return {
@@ -36,12 +30,12 @@ function applyConfig<Options extends NavigationScreenOptions>(
 }
 
 export default function createConfigGetter<Options extends NavigationScreenOptions = NavigationScreenOptions>(
-  routeConfigs: NavigationRouteConfigMap,
-  navigatorScreenConfig?: NavigationScreenConfig<any, Options>
-): NavigationScreenOptionsGetter<any, Options> {
+  routeConfigs: import('../types').NavigationRouteConfigMap,
+  navigatorScreenConfig?: import('../screens').NavigationScreenConfig<any, Options>
+): import('../screens').NavigationScreenOptionsGetter<any, Options> {
   return (
-    navigation: NavigationScreenPropBase<any>,
-    screenProps?: NavigationComponentScreenProps
+    navigation: import('../screens').NavigationScreenPropBase<any>,
+    screenProps?: import('../screens').NavigationComponentScreenProps
   ): Options => {
     const { state } = navigation;
     const route = state;

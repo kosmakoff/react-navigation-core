@@ -2,10 +2,12 @@ import * as React from 'react';
 import hoistNonReactStatics from 'hoist-non-react-statics';
 import invariant from 'invariant';
 import { NavigationContext } from '../context';
-import {
-  NavigationInjectedProps,
-  NavigationOnRefInjectedProps
-} from '../views';
+
+type NavigationInjectedProps<S> =
+  import('../views').NavigationInjectedProps<S>;
+
+type NavigationOnRefInjectedProps<P, T> =
+  import('../views').NavigationOnRefInjectedProps<P, T>;
 
 export default function withNavigation<P extends NavigationInjectedProps<any>>(
   Component: React.ComponentType<P>

@@ -1,8 +1,8 @@
 /* tslint:disable:max-classes-per-file */
 import * as React from 'react';
-import { NavigationScreenOptions } from '../../screens';
-
 import createConfigGetter from '../createConfigGetter';
+
+type NavigationScreenOptions = import('../../screens').NavigationScreenOptions;
 
 interface TestNavigationScreenOptions extends NavigationScreenOptions {
   gesturesEnabled?: boolean;

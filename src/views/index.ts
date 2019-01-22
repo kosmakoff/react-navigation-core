@@ -30,7 +30,7 @@ export type NavigationEventsProps<State, Options> =
   };
 
 export interface NavigationInjectedProps<State> {
-  navigation?: NavigationScreenProp<State>;
+  navigation: NavigationScreenProp<State>;
 };
 
 export interface NavigationFocusInjectedProps<State>

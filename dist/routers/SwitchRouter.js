@@ -3,9 +3,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const tslib_1 = require("tslib");
 const invariant_1 = tslib_1.__importDefault(require("invariant"));
 const pathUtils_1 = require("./pathUtils");
-const screens_1 = require("../screens");
-const actions_1 = require("../actions");
 const routers_1 = require("../routers");
+const actions_1 = require("../actions");
+const screens_1 = require("../screens");
 const defaultActionCreators = () => ({});
 // Todo: make SwitchRouter not depend on StackActions..
 function childrenUpdateWithoutSwitchingIndex(action) {

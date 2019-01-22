@@ -1,4 +1,5 @@
-import { NavigationScreenOptions } from '../screens';
-import { NavigationRouter, NavigationStackRouterConfig, NavigationStackRouterActionCreators } from '../routers';
-import { NavigationRouteConfigMap, NavigationState } from '../types';
-export declare function StackRouter<Actions extends NavigationStackRouterActionCreators>(routeConfigs: NavigationRouteConfigMap, stackConfig?: NavigationStackRouterConfig<NavigationState>): NavigationRouter<NavigationState, NavigationScreenOptions, Actions>;
+declare type NavigationScreenOptions = import('../screens').NavigationScreenOptions;
+declare type NavigationState = import('../types').NavigationState;
+declare type NavigationStackRouterActionCreators = import('../routers').NavigationStackRouterActionCreators;
+export declare function StackRouter<Actions extends NavigationStackRouterActionCreators>(routeConfigs: import('../types').NavigationRouteConfigMap, stackConfig?: import('../routers').NavigationStackRouterConfig<NavigationState>): import('../routers').NavigationRouter<NavigationState, NavigationScreenOptions, Actions>;
+export {};

@@ -2,35 +2,36 @@ import getChildEventSubscriber from './getChildEventSubscriber';
 import getChildrenNavigationCache from './getChildrenNavigationCache';
 import getChildRouter from './getChildRouter';
 import { getNavigationActionCreators } from './actions';
-import {
-  NavigationScreenProp,
-  NavigationScreenPropRoot
-} from './screens';
-import {
-  NavigationParams,
-  NavigationRoute,
-  NavigationStateRoute,
-} from './types';
 
-const createParamGetter = <P extends NavigationParams>(route: NavigationRoute<P>) =>
-  <T extends keyof P>(paramName: T, defaultValue?: P[T]): P[T] | undefined => {
-    const params = route.params;
+type NavigationScreenPropRoot<S, P, A> =
+  import('./screens').NavigationScreenPropRoot<S, P, A>;
+type NavigationScreenProp<S, P, A> =
+  import('./screens').NavigationScreenProp<S, P, A>;
 
-    if (params && paramName in params) {
-      return params[paramName];
-    }
+type NavigationParams = import('./types').NavigationParams;
+type NavigationStateRoute = import('./types').NavigationStateRoute;
 
-    return defaultValue;
-  };
+const createParamGetter =
+  <P extends NavigationParams>(route: import('./types').NavigationRoute<P>) =>
+    <T extends keyof P>(paramName: T, defaultValue?: P[T]): P[T] | undefined => {
+      const params = route.params;
+
+      if (params && paramName in params) {
+        return params[paramName];
+      }
+
+      return defaultValue;
+    };
 
 export default function getChildNavigation<
   State extends NavigationStateRoute,
   Params = NavigationParams,
-  Actions = {},
+  Actions = {}
 >(
   navigation: NavigationScreenPropRoot<State, Params, Actions>,
   childKey: string,
-  getCurrentParentNavigation: () => NavigationScreenPropRoot<State, Params, Actions> | null
+  getCurrentParentNavigation:
+    () => NavigationScreenPropRoot<State, Params, Actions> | null
 ): NavigationScreenProp<State, Params, Actions> | null {
 
   const children = getChildrenNavigationCache(navigation);

@@ -1,5 +1,4 @@
-import { NavigationParams } from '../types';
-import { NavigationNavigateAction } from '../actions';
+declare type NavigationParams = import('../types').NavigationParams;
 export interface NavigationBackActionPayload {
     key?: string | null;
     immediate?: boolean;
@@ -30,7 +29,7 @@ export interface NavigationSetParamsActionPayload {
 export interface NavigationSetParamsAction extends NavigationSetParamsActionPayload {
     type: 'Navigation/SET_PARAMS';
 }
-export declare const NavigationActions: {
+export declare const NavigationActions: Readonly<{
     back: (payload?: NavigationBackActionPayload) => NavigationBackAction;
     init: (payload?: NavigationInitActionPayload) => NavigationInitAction;
     navigate: (payload: NavigationNavigateActionPayload) => NavigationNavigateAction;
@@ -39,4 +38,5 @@ export declare const NavigationActions: {
     INIT: "Navigation/INIT";
     NAVIGATE: "Navigation/NAVIGATE";
     SET_PARAMS: "Navigation/SET_PARAMS";
-};
+}>;
+export {};

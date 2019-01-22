@@ -1,9 +1,7 @@
-import { NavigationRouter } from './routers';
-
 export default function getChildRouter(
-  router: NavigationRouter<any>,
+  router: import('./routers').NavigationRouter<any>,
   routeName: string
-): NavigationRouter<any> | null | undefined {
+): import('./routers').NavigationRouter<any> | null | undefined {
   if (router.childRouters && router.childRouters[routeName]) {
     return router.childRouters[routeName];
   }

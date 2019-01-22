@@ -1,13 +1,13 @@
 import { isValidElementType } from 'react-is';
 import invariant from 'invariant';
-import { NavigationRouteConfigMap } from '../types';
-import { NavigationRouteConfig } from '../screens';
 
 /**
  * Make sure the config passed e.g. to StackRouter, TabRouter has
  * the correct format, and throw a clear error if it doesn't.
  */
-export default function validateRouteConfigMap(routeConfigs: NavigationRouteConfigMap) {
+export default function validateRouteConfigMap(
+  routeConfigs: import('../types').NavigationRouteConfigMap
+) {
   const routeNames = Object.keys(routeConfigs);
   if (!routeNames.length) {
     throw new Error('Please specify at least one route when configuring a navigator.');
@@ -47,7 +47,7 @@ export default function validateRouteConfigMap(routeConfigs: NavigationRouteConf
   });
 }
 
-function getScreenComponent(routeConfig: NavigationRouteConfig) {
+function getScreenComponent(routeConfig: import('../screens').NavigationRouteConfig) {
   if (!routeConfig) {
     return null;
   }

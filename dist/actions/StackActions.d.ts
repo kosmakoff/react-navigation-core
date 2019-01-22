@@ -1,5 +1,5 @@
-import { NavigationParams } from '../types';
-import { NavigationNavigateAction } from '../actions';
+declare type NavigationNavigateAction = import('../actions').NavigationNavigateAction;
+declare type NavigationParams = import('../types').NavigationParams;
 export interface NavigationPopActionPayload {
     n?: number;
     immediate?: boolean;
@@ -48,7 +48,7 @@ export interface NavigationCompleteTransitionActionPayload {
 export interface NavigationCompleteTransitionAction extends NavigationCompleteTransitionActionPayload {
     type: 'Navigation/COMPLETE_TRANSITION';
 }
-export declare const StackActions: {
+export declare const StackActions: Readonly<{
     pop: (payload?: NavigationPopActionPayload) => NavigationPopAction;
     popToTop: (payload?: NavigationPopToTopActionPayload) => NavigationPopToTopAction;
     push: (payload: NavigationPushActionPayload) => NavigationPushAction;
@@ -61,4 +61,5 @@ export declare const StackActions: {
     RESET: "Navigation/RESET";
     REPLACE: "Navigation/REPLACE";
     COMPLETE_TRANSITION: "Navigation/COMPLETE_TRANSITION";
-};
+}>;
+export {};
