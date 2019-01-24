@@ -6,7 +6,6 @@
     "sourceMap": false
   },
   "include": [
-    "types",
     "**/__tests__/"
   ]
 }

@@ -8,10 +8,10 @@ const withNavigation_1 = tslib_1.__importDefault(require("./withNavigation"));
 const subscriptions = Symbol('subscriptions');
 function withNavigationFocus(Component) {
     class ComponentWithNavigationFocus extends React.Component {
-        constructor(props) {
-            super(props);
+        constructor() {
+            super(...arguments);
             this.state = {
-                isFocused: props.navigation ? props.navigation.isFocused() : false,
+                isFocused: this.props.navigation ? this.props.navigation.isFocused() : false,
             };
         }
         componentDidMount() {
