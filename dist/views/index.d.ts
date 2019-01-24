@@ -7,7 +7,7 @@ export declare type NavigationFocusInjectedProps<State> = NavigationInjectedProp
     isFocused: boolean;
 };
 export declare type NavigationOnRefInjectedProps<P, T> = {
-    onRef?: (ref: (T extends React.ComponentClass<P> ? React.Ref<InstanceType<T>> : undefined)) => any;
+    onRef?: T extends React.ComponentClass<P> ? React.Ref<InstanceType<T>> : undefined;
 };
 export * from './events';
 export { default as SceneView } from './SceneView';
