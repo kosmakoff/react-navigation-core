@@ -11,7 +11,9 @@ export type NavigationFocusInjectedProps<State> =
   };
 
 export type NavigationOnRefInjectedProps<P, T> = {
-  onRef?: T extends React.ComponentClass<P> ? React.Ref<InstanceType<T>> : undefined;
+  onRef?: T extends React.ComponentClass<P>
+    ? (instance: InstanceType<T> | null) => void
+    : undefined;
 };
 
 export * from './events';
