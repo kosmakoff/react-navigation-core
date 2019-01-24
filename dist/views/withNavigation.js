@@ -7,15 +7,18 @@ const invariant_1 = tslib_1.__importDefault(require("invariant"));
 const context_1 = require("../context");
 function withNavigation(Component) {
     class ComponentWithNavigation extends React.Component {
-        render() {
-            const navigationProp = this.props.navigation;
-            return (React.createElement(context_1.NavigationContext.Consumer, null, navigationContext => {
-                const navigation = navigationProp || navigationContext;
+        constructor() {
+            super(...arguments);
+            this._setNavigationContext = (navigationContext) => {
+                const navigation = this.props.navigation || navigationContext;
                 if (!navigation) { /* tslint:disable-next-line:max-line-length */
                     invariant_1.default(false, 'withNavigation can only be used on a view hierarchy of a navigator. The wrapped component is unable to get access to navigation from props or context.');
                 }
                 return (React.createElement(Component, Object.assign({}, this.props, { navigation: navigation, ref: this.props.onRef })));
-            }));
+            };
+        }
+        render() {
+            return (React.createElement(context_1.NavigationContext.Consumer, null, this._setNavigationContext));
         }
     }
     ComponentWithNavigation.displayName = `withNavigation(${Component.displayName || Component.name})`;

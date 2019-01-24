@@ -18,23 +18,24 @@ export default function withNavigation<P extends NavigationInjectedProps<any>>(
   > {
     static displayName = `withNavigation(${Component.displayName || Component.name})`;
 
+    _setNavigationContext = (navigationContext: P['navigation']) => {
+      const navigation = this.props.navigation || navigationContext;
+      if (!navigation) { /* tslint:disable-next-line:max-line-length */
+        invariant(false, 'withNavigation can only be used on a view hierarchy of a navigator. The wrapped component is unable to get access to navigation from props or context.');
+      }
+      return (
+        <Component
+          {...this.props}
+          navigation={navigation}
+          ref={this.props.onRef}
+        />
+      );
+    }
+
     render() {
-      const navigationProp = this.props.navigation;
       return (
         <NavigationContext.Consumer>
-          {navigationContext => {
-            const navigation = navigationProp || navigationContext;
-            if (!navigation) { /* tslint:disable-next-line:max-line-length */
-              invariant(false, 'withNavigation can only be used on a view hierarchy of a navigator. The wrapped component is unable to get access to navigation from props or context.');
-            }
-            return (
-              <Component
-                {...this.props}
-                navigation={navigation}
-                ref={this.props.onRef}
-              />
-            );
-          }}
+          {this._setNavigationContext}
         </NavigationContext.Consumer>
       );
     }

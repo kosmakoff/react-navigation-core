@@ -27,7 +27,6 @@ export default function withNavigationFocus<P extends NavigationFocusInjectedPro
   type PropsHOC = P & NavigationOnRefInjectedProps<P, typeof Component>;
 
   class ComponentWithNavigationFocus extends React.Component<PropsHOC, StateHOC> {
-
     state = {
       isFocused: this.props.navigation ? this.props.navigation.isFocused() : false,
     }
