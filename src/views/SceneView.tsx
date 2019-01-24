@@ -1,10 +1,20 @@
 import * as React from 'react';
 import { NavigationContext } from '../context';
 
-type NavigationSceneViewProps<S, O> =
-  import('../views').NavigationSceneViewProps<S, O>;
+// types
+import {
+  NavigationComponentProps,
+  NavigationComponentScreenProps,
+  NavigationScreenProp
+} from '../screens';
 
-export default class SceneView extends React.PureComponent<NavigationSceneViewProps<any, any>> {
+type Props<State, Options> = {
+  navigation: NavigationScreenProp<State, Options>;
+  screenProps?: NavigationComponentScreenProps;
+  component: React.ComponentType<NavigationComponentProps<State, Options>>;
+};
+
+export default class SceneView extends React.PureComponent<Props<any, any>> {
   render() {
     const { screenProps, component: Component, navigation } = this.props;
     return (

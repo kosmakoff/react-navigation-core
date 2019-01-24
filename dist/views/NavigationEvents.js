@@ -4,13 +4,13 @@ const tslib_1 = require("tslib");
 const React = tslib_1.__importStar(require("react"));
 const withNavigation_1 = tslib_1.__importDefault(require("./withNavigation"));
 const events_1 = require("./events");
-const EventNameToPropName = {
+const EventNameToPropName = Object.freeze({
     willFocus: 'onWillFocus',
     didFocus: 'onDidFocus',
     willBlur: 'onWillBlur',
     didBlur: 'onDidBlur',
-};
-const subscriptions = Symbol();
+});
+const subscriptions = Symbol('subscriptions');
 class NavigationEvents extends React.Component {
     constructor() {
         super(...arguments);

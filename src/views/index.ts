@@ -1,46 +1,18 @@
-import { ViewProps } from 'react-native';
-import { NavigationEventTypeProps } from './events';
-import { NavigationViewProps } from '../navigators';
-import {
-  Omit,
-  NavigationEventCallback
-} from '../types';
-import {
-  NavigationScreenProp,
-  NavigationComponentProps,
-  NavigationComponentScreenProps,
-} from '../screens';
+import { NavigationScreenProp } from '../screens';
 
-export interface NavigationSceneViewProps<State, Options> {
-  navigation: NavigationScreenProp<State, Options>;
-  screenProps?: NavigationComponentScreenProps;
-  component: React.ComponentType<NavigationComponentProps<State, Options>>;
-};
-
-export type NavigationSwitchViewProps<State, Options> =
-  Omit<NavigationViewProps<State, Options>, 'navigationConfig'>;
-
-export type NavigationEventsProps<State, Options> =
-  ViewProps
-  & {
-    navigation: NavigationScreenProp<State, Options>;
-  }
-  & {
-    [K in NavigationEventTypeProps]?: NavigationEventCallback;
-  };
-
-export interface NavigationInjectedProps<State> {
+export type NavigationInjectedProps<State> = {
   navigation: NavigationScreenProp<State>;
 };
 
-export interface NavigationFocusInjectedProps<State>
- extends NavigationInjectedProps<State> {
-  isFocused: boolean;
-};
+export type NavigationFocusInjectedProps<State> =
+  NavigationInjectedProps<State>
+  & {
+    isFocused: boolean;
+  };
 
-export interface NavigationOnRefInjectedProps<P, T> {
+export type NavigationOnRefInjectedProps<P, T> = {
   onRef?: (ref: (T extends React.ComponentClass<P> ? React.Ref<InstanceType<T>> : undefined)) => any;
-}
+};
 
 export * from './events';
 export { default as SceneView } from './SceneView';

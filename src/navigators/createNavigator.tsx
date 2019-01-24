@@ -2,31 +2,34 @@ import * as React from 'react';
 import { polyfill } from 'react-lifecycles-compat';
 import invariant from 'invariant';
 
-type NavigationState = import('../types').NavigationState;
-type NavigationScreenOptions = import('../screens').NavigationScreenOptions;
-type NavigationNavigatorProps<S, O> =
-  import('../screens').NavigationNavigatorProps<S, O>;
+// types
+import { NavigationRouter } from '../routers';
+import { NavigationScreenOptions } from '../screens';
+import { NavigationState } from '../types';
+import {
+  NavigationViewProps,
+  NavigationNavigator,
+  NavigationNavigatorProps
+} from '.';
 
 /**
  * Create Navigator
  */
 export function createNavigator<
-  Props extends NavigationNavigatorProps<State, Options>,
+  P extends NavigationViewProps<State, Options>,
   State extends NavigationState,
   Options = NavigationScreenOptions,
   Actions = {}
 >(
-  NavigationView: import('../navigators').NavigationView<State, Options>,
-  router: import('../routers').NavigationRouter<State, Options, Actions>,
-  navigationConfig: import('../screens').NavigationConfig<State, Options> = {}
-): import('../screens').NavigationNavigator<State, Options, Props> {
+  NavigationView: React.ComponentType<P>,
+  router: NavigationRouter<State, Options, Actions>,
+  navigationConfig: P['navigationConfig'] = {}
+): NavigationNavigator<State, Options, NavigationNavigatorProps<State, Options>> {
 
-  type StateHOC = import('../types').Include<
-    import('../types').InferProps<typeof NavigationView>,
-    'descriptors' | 'screenProps'
-  >;
+  type StateHOC = Pick<P, 'descriptors' | 'screenProps'>;
+  type PropsHOC = Readonly<Pick<P, 'navigation' | 'screenProps'>>;
 
-  class Navigator extends React.Component<Props, StateHOC> {
+  class Navigator extends React.Component<PropsHOC, StateHOC> {
     static router = router;
     static navigationOptions = navigationConfig.navigationOptions;
 
@@ -35,7 +38,7 @@ export function createNavigator<
       screenProps: this.props.screenProps,
     };
 
-    static getDerivedStateFromProps(nextProps: Props, prevState: StateHOC) {
+    static getDerivedStateFromProps(nextProps: PropsHOC, prevState: StateHOC) {
       const prevDescriptors = prevState.descriptors;
       const { navigation, screenProps } = nextProps;
       if (!navigation) { /* tslint:disable-next-line:max-line-length */
@@ -81,7 +84,7 @@ export function createNavigator<
     render() {
       return (
         <NavigationView
-          {...this.props}
+          {...this.props as P}
           screenProps={this.state.screenProps}
           navigation={this.props.navigation}
           navigationConfig={navigationConfig}

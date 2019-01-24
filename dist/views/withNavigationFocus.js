@@ -5,9 +5,8 @@ const React = tslib_1.__importStar(require("react"));
 const hoist_non_react_statics_1 = tslib_1.__importDefault(require("hoist-non-react-statics"));
 const invariant_1 = tslib_1.__importDefault(require("invariant"));
 const withNavigation_1 = tslib_1.__importDefault(require("./withNavigation"));
-const subscriptions = Symbol();
+const subscriptions = Symbol('subscriptions');
 function withNavigationFocus(Component) {
-    ;
     class ComponentWithNavigationFocus extends React.Component {
         constructor(props) {
             super(props);
@@ -34,7 +33,8 @@ function withNavigationFocus(Component) {
     }
     ComponentWithNavigationFocus.displayName = `withNavigationFocus(${Component.displayName ||
         Component.name})`;
-    return hoist_non_react_statics_1.default(withNavigation_1.default(ComponentWithNavigationFocus), Component);
+    const hoistStatics = hoist_non_react_statics_1.default(withNavigation_1.default(ComponentWithNavigationFocus), Component);
+    return hoistStatics;
 }
 exports.default = withNavigationFocus;
 //# sourceMappingURL=withNavigationFocus.js.map

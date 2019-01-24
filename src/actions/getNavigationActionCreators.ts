@@ -1,6 +1,8 @@
 import { NavigationActions } from '../actions';
 
-export function getNavigationActionCreators<Params = import('../types').NavigationParams>(
+type NavigationParams = import('../types').NavigationParams;
+
+export function getNavigationActionCreators<Params = NavigationParams>(
   route: import('../types').NavigationRoute
 ): import('../actions').NavigationActionCreators<Params> {
   return {
@@ -14,7 +16,11 @@ export function getNavigationActionCreators<Params = import('../types').Navigati
       }
       return NavigationActions.back({ key: actualizedKey });
     },
-    navigate: (navigateTo: string, params?: Params, action?: import('../actions').NavigationNavigateAction) => {
+    navigate: (
+      navigateTo: string,
+      params?: Params,
+      action?: import('../actions').NavigationNavigateAction
+    ) => {
       if (typeof navigateTo === 'string') {
         return NavigationActions.navigate({
           params,

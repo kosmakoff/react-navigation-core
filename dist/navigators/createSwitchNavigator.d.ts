@@ -1,3 +1,4 @@
-declare type NavigationState = import('../types').NavigationState;
-export declare function createSwitchNavigator<State extends NavigationState>(routeConfigMap: import('../types').NavigationRouteConfigMap, switchConfig?: import('../routers').NavigationSwitchRouterConfig<NavigationState>): import("..").NavigationNavigator<import("../types").NavigationState, import("..").NavigationScreenOptions, import("..").NavigationNavigatorProps<import("../types").NavigationState, import("..").NavigationScreenOptions>>;
+import { NavigationState, NavigationRouteConfigMap } from '../types';
+declare type NavigationSwitchRouterConfig<S> = import('../routers').NavigationSwitchRouterConfig<S>;
+export declare function createSwitchNavigator<State extends NavigationState>(routeConfigMap: NavigationRouteConfigMap, switchConfig?: NavigationSwitchRouterConfig<NavigationState>): import(".").NavigationNavigator<NavigationState, import("..").NavigationScreenOptions, Pick<import(".").NavigationViewProps<NavigationState, import("..").NavigationScreenOptions>, "navigation" | "screenProps">>;
 export {};

@@ -2,23 +2,35 @@ import * as React from 'react';
 import withNavigation from './withNavigation';
 import { NavigationViewEVENTNames as EventNames } from './events';
 
-type NavigationEventsProps<S, O> = import('.').NavigationEventsProps<S, O>;
+// types
+import { NavigationScreenProp } from '../screens';
+import {
+  NavigationEventCallback,
+  NavigationEventSubscription
+} from '../types';
+
 type NavigationViewEventType = import('./events').NavigationViewEventType;
 type NavigationEventTypeProps = import('./events').NavigationEventTypeProps;
 
-const EventNameToPropName: { [key in NavigationViewEventType]: NavigationEventTypeProps } = {
-  willFocus: 'onWillFocus',
-  didFocus: 'onDidFocus',
-  willBlur: 'onWillBlur',
-  didBlur: 'onDidBlur',
-};
-
-const subscriptions = Symbol();
-
-class NavigationEvents extends React.Component<NavigationEventsProps<any, any>> {
-  [subscriptions]: {
-    [event in NavigationViewEventType]: import('../types').NavigationEventSubscription;
+type Props<State, Options> =
+  import('react-native').ViewProps
+  & {
+    navigation: NavigationScreenProp<State, Options>;
   }
+  & Partial<Record<NavigationEventTypeProps, NavigationEventCallback>>;
+
+const EventNameToPropName =
+  Object.freeze<Record<NavigationViewEventType, NavigationEventTypeProps>>({
+    willFocus: 'onWillFocus',
+    didFocus: 'onDidFocus',
+    willBlur: 'onWillBlur',
+    didBlur: 'onDidBlur',
+  });
+
+const subscriptions = Symbol('subscriptions');
+
+class NavigationEvents extends React.Component<Props<any, any>> {
+  [subscriptions]: Record<NavigationViewEventType, NavigationEventSubscription>;
 
   getPropListener = (eventName: NavigationViewEventType) =>
     this.props[EventNameToPropName[eventName]];

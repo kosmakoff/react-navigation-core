@@ -19,7 +19,8 @@ function withNavigation(Component) {
         }
     }
     ComponentWithNavigation.displayName = `withNavigation(${Component.displayName || Component.name})`;
-    return hoist_non_react_statics_1.default(ComponentWithNavigation, Component);
+    const hoistStatics = hoist_non_react_statics_1.default(ComponentWithNavigation, Component);
+    return hoistStatics;
 }
 exports.default = withNavigation;
 //# sourceMappingURL=withNavigation.js.map

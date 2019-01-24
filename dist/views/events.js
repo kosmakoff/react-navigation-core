@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.NavigationViewEVENTNames = [
+exports.NavigationViewEVENTNames = Object.freeze([
     'willFocus', 'didFocus', 'willBlur', 'didBlur',
-];
-exports.NavigationEVENTNames = [
+]);
+exports.NavigationEVENTNames = Object.freeze([
     'action', 'refocus', ...exports.NavigationViewEVENTNames,
-];
+]);
 //# sourceMappingURL=events.js.map

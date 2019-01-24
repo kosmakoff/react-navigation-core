@@ -2,19 +2,24 @@ import getChildNavigation from './getChildNavigation';
 import getChildrenNavigationCache from './getChildrenNavigationCache';
 import { getNavigationActionCreators } from './actions';
 
-type NavigationParams = import('./types').NavigationParams;
-type NavigationScreenPropRoot<S, P, A> =
-  import('./screens').NavigationScreenPropRoot<S, P, A>;
+// types
+import { NavigationRouter } from './routers';
+import { NavigationScreenPropRoot } from './screens';
+import {
+  NavigationParams,
+  NavigationDispatch,
+  NavigationEventCallback,
+} from './types';
 
 export function getNavigation<
   State = {},
   Params = NavigationParams,
   Actions = {}
 >(
-  router: import('./routers').NavigationRouter<State, Params, Actions>,
+  router: NavigationRouter<State, Params, Actions>,
   state: State,
-  dispatch: import('./types').NavigationDispatch,
-  actionSubscribers: Set<import('./types').NavigationEventCallback>,
+  dispatch: NavigationDispatch,
+  actionSubscribers: Set<NavigationEventCallback>,
   getScreenProps: () => {},
   getCurrentNavigation:
     () => NavigationScreenPropRoot<any, Params, Actions>
@@ -49,7 +54,7 @@ export function getNavigation<
     },
     addListener: (
       eventName: import('./views/events').NavigationEventType,
-      handler: import('./types').NavigationEventCallback
+      handler: NavigationEventCallback
     ) => {
       if (eventName !== 'action') {
         return { remove: () => {} };

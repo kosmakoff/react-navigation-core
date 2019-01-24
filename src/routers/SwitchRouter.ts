@@ -1,22 +1,32 @@
+/* tslint:disable:no-duplicate-imports */
 import invariant from 'invariant';
 import { createPathParser } from './pathUtils';
 import { validateRouteConfigMap } from '../routers';
 import { NavigationActions, StackActions } from '../actions';
 import { createConfigGetter, getScreenForRouteName } from '../screens';
 
-type NavigationScreenOptions = import('../screens').NavigationScreenOptions;
-type NavigationState = import('../types').NavigationState;
-type NavigationParams = import('../types').NavigationParams;
-type NavigationStateRoute = import('../types').NavigationStateRoute;
-type NavigationRoute = import('../types').NavigationRoute;
-type NavigationSwitchRouterActionCreators =
-  import('../routers').NavigationSwitchRouterActionCreators;
+// types
+import { NavigationAction } from '../actions';
+import { NavigationScreenOptions } from '../screens';
+import {
+  NavigationRouter,
+  NavigationChildRouters,
+  NavigationSwitchRouterConfig,
+  NavigationSwitchRouterActionCreators
+} from '../routers';
+import {
+  NavigationParams,
+  NavigationRoute,
+  NavigationState,
+  NavigationStateRoute,
+  NavigationRouteConfigMap
+} from '../types';
 
 const defaultActionCreators = () => ({});
 
 // Todo: make SwitchRouter not depend on StackActions..
 function childrenUpdateWithoutSwitchingIndex(
-  action: import('../actions').NavigationAction
+  action: NavigationAction
 ) {
   return (
     action.type === NavigationActions.SET_PARAMS ||
@@ -25,9 +35,9 @@ function childrenUpdateWithoutSwitchingIndex(
 }
 
 export function SwitchRouter<Actions extends NavigationSwitchRouterActionCreators>(
-  routeConfigs: import('../types').NavigationRouteConfigMap,
-  config: import('../routers').NavigationSwitchRouterConfig<NavigationState> = {} as any
-): import('../routers').NavigationRouter<NavigationState, NavigationScreenOptions, Actions> {
+  routeConfigs: NavigationRouteConfigMap,
+  config: NavigationSwitchRouterConfig<NavigationState> = {} as any
+): NavigationRouter<NavigationState, NavigationScreenOptions, Actions> {
   // Fail fast on invalid route definitions
   validateRouteConfigMap(routeConfigs);
 
@@ -42,7 +52,7 @@ export function SwitchRouter<Actions extends NavigationSwitchRouterActionCreator
     );
   }
 
-  const childRouters: import('../routers').NavigationChildRouters<NavigationStateRoute> = {};
+  const childRouters: NavigationChildRouters<NavigationStateRoute> = {};
 
   // Loop through routes and find child routers
   order.forEach(routeName => {
@@ -144,7 +154,7 @@ export function SwitchRouter<Actions extends NavigationSwitchRouterActionCreator
     },
 
     getStateForAction(
-      action: import('../actions').NavigationAction,
+      action: NavigationAction,
       inputState?: NavigationState
     ): NavigationState | null {
       const prevState = inputState ? { ...inputState } : inputState;

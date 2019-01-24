@@ -1,7 +1,14 @@
 import { NavigationEVENTNames as upstreamEvents } from './views/events';
 
-type NavigationState =  import('./types').NavigationState;
-type NavigationEventPayload = import('./types').NavigationEventPayload;
+// types
+import {
+  NavigationState,
+  NavigationEventPayload,
+  NavigationEventCallback,
+  NavigationEventSubscriber,
+  NavigationAddListenerEventCallback
+} from './types';
+
 type NavigationEventType = import('./views/events').NavigationEventType;
 
 /*
@@ -11,10 +18,10 @@ type NavigationEventType = import('./views/events').NavigationEventType;
  * focus and blur events for this child
  */
 export default function getChildEventSubscriber(
-  addListener: import('./types').NavigationAddListenerEventCallback,
+  addListener: NavigationAddListenerEventCallback,
   key: string,
   initialLastFocusEvent: NavigationEventType = 'didBlur'
-): import('./types').NavigationEventSubscriber {
+): NavigationEventSubscriber {
   const actionSubscribers = new Set();
   const willFocusSubscribers = new Set();
   const didFocusSubscribers = new Set();
@@ -170,7 +177,7 @@ export default function getChildEventSubscriber(
   return {
     addListener(
       eventName: NavigationEventType,
-      eventHandler: import('./types').NavigationEventCallback
+      eventHandler: NavigationEventCallback
     ) {
       const subscribers = getChildSubscribers(eventName);
       if (!subscribers) {

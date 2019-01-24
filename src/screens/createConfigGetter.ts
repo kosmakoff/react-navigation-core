@@ -1,13 +1,23 @@
+/* tslint:disable:no-duplicate-imports */
 import validateScreenOptions from './validateScreenOptions';
 import { getScreenForRouteName } from '../screens';
 
-type NavigationScreenOptions = import('../screens').NavigationScreenOptions;
+// types
+import { Omit, NavigationRouteConfigMap } from '../types';
+import {
+  NavigationScreenConfig,
+  NavigationScreenOptions,
+  NavigationScreenConfigParams,
+  NavigationScreenOptionsGetter,
+  NavigationScreenPropBase,
+  NavigationComponentScreenProps
+} from '../screens';
 
 function applyConfig<Options extends NavigationScreenOptions>(
-  configurer: import('../screens').NavigationScreenConfig<any, Options> | null | undefined,
+  configurer: NavigationScreenConfig<any, Options> | null | undefined,
   navigationOptions: Options,
-  configProps: import('../types').Omit<
-    import('../screens').NavigationScreenConfigParams<any, Options>,
+  configProps: Omit<
+    NavigationScreenConfigParams<any, Options>,
     'navigationOptions'
   >
 ): NavigationScreenOptions {
@@ -29,13 +39,15 @@ function applyConfig<Options extends NavigationScreenOptions>(
   return navigationOptions;
 }
 
-export default function createConfigGetter<Options extends NavigationScreenOptions = NavigationScreenOptions>(
-  routeConfigs: import('../types').NavigationRouteConfigMap,
-  navigatorScreenConfig?: import('../screens').NavigationScreenConfig<any, Options>
-): import('../screens').NavigationScreenOptionsGetter<any, Options> {
+export default function createConfigGetter<
+  Options extends NavigationScreenOptions = NavigationScreenOptions
+>(
+  routeConfigs: NavigationRouteConfigMap,
+  navigatorScreenConfig?: NavigationScreenConfig<any, Options>
+): NavigationScreenOptionsGetter<any, Options> {
   return (
-    navigation: import('../screens').NavigationScreenPropBase<any>,
-    screenProps?: import('../screens').NavigationComponentScreenProps
+    navigation: NavigationScreenPropBase<any>,
+    screenProps?: NavigationComponentScreenProps
   ): Options => {
     const { state } = navigation;
     const route = state;

@@ -3,16 +3,19 @@ import getChildrenNavigationCache from './getChildrenNavigationCache';
 import getChildRouter from './getChildRouter';
 import { getNavigationActionCreators } from './actions';
 
-type NavigationScreenPropRoot<S, P, A> =
-  import('./screens').NavigationScreenPropRoot<S, P, A>;
-type NavigationScreenProp<S, P, A> =
-  import('./screens').NavigationScreenProp<S, P, A>;
-
-type NavigationParams = import('./types').NavigationParams;
-type NavigationStateRoute = import('./types').NavigationStateRoute;
+// types
+import {
+  NavigationScreenProp,
+  NavigationScreenPropRoot
+} from './screens';
+import {
+  NavigationParams,
+  NavigationRoute,
+  NavigationStateRoute,
+} from './types';
 
 const createParamGetter =
-  <P extends NavigationParams>(route: import('./types').NavigationRoute<P>) =>
+  <P extends NavigationParams>(route: NavigationRoute<P>) =>
     <T extends keyof P>(paramName: T, defaultValue?: P[T]): P[T] | undefined => {
       const params = route.params;
 

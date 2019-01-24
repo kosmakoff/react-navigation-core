@@ -3,15 +3,16 @@ import hoistNonReactStatics from 'hoist-non-react-statics';
 import invariant from 'invariant';
 import { NavigationContext } from '../context';
 
-type NavigationInjectedProps<S> =
-  import('../views').NavigationInjectedProps<S>;
-
-type NavigationOnRefInjectedProps<P, T> =
-  import('../views').NavigationOnRefInjectedProps<P, T>;
+// types
+import { Omit, InferProps } from '../types';
+import {
+  NavigationInjectedProps,
+  NavigationOnRefInjectedProps
+} from '../views';
 
 export default function withNavigation<P extends NavigationInjectedProps<any>>(
   Component: React.ComponentType<P>
-): React.ComponentClass<P & NavigationOnRefInjectedProps<P, typeof Component>> {
+) {
   class ComponentWithNavigation extends React.Component<
     P & NavigationOnRefInjectedProps<P, typeof Component>
   > {
@@ -39,5 +40,10 @@ export default function withNavigation<P extends NavigationInjectedProps<any>>(
     }
   }
 
-  return hoistNonReactStatics(ComponentWithNavigation, Component);
+  const hoistStatics = hoistNonReactStatics(ComponentWithNavigation, Component);
+
+  type Infer = InferProps<typeof hoistStatics>;
+  type Props = Omit<Infer, 'navigation'> & Partial<Infer>;
+
+  return hoistStatics as React.ComponentClass<Props>;
 }

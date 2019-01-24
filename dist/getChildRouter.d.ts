@@ -1,1 +1,2 @@
-export default function getChildRouter(router: import('./routers').NavigationRouter<any>, routeName: string): import('./routers').NavigationRouter<any> | null | undefined;
+import { NavigationRouter } from './routers';
+export default function getChildRouter(router: NavigationRouter<any>, routeName: string): NavigationRouter<any> | null | undefined;

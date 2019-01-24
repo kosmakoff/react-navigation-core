@@ -3,25 +3,31 @@ import hoistNonReactStatics from 'hoist-non-react-statics';
 import invariant from 'invariant';
 import withNavigation from './withNavigation';
 
-type NavigationFocusInjectedProps<S> =
-  import('../views').NavigationFocusInjectedProps<S>;
+// types
+import {
+  Omit,
+  InferProps,
+  NavigationEventSubscription
+} from '../types';
+import {
+  NavigationFocusInjectedProps,
+  NavigationOnRefInjectedProps
+} from '../views';
 
-type NavigationOnRefInjectedProps<P, T> =
-  import('../views').NavigationOnRefInjectedProps<P, T>;
-
-const subscriptions = Symbol();
+const subscriptions = Symbol('subscriptions');
 
 export default function withNavigationFocus<P extends NavigationFocusInjectedProps<any>>(
   Component: React.ComponentType<P>
-): React.ComponentClass<P & NavigationOnRefInjectedProps<P, typeof Component>> {
+) {
 
-  interface StateHOC {
+  type StateHOC = {
     isFocused: boolean;
   };
-  type Props = P & NavigationOnRefInjectedProps<P, typeof Component>
 
-  class ComponentWithNavigationFocus extends React.Component<Props, StateHOC> {
-    constructor(props: Props) {
+  type PropsHOC = P & NavigationOnRefInjectedProps<P, typeof Component>;
+
+  class ComponentWithNavigationFocus extends React.Component<PropsHOC, StateHOC> {
+    constructor(props: PropsHOC) {
       super(props);
 
       this.state = {
@@ -32,7 +38,7 @@ export default function withNavigationFocus<P extends NavigationFocusInjectedPro
     static displayName = `withNavigationFocus(${Component.displayName ||
       Component.name})`;
 
-    [subscriptions]: Array<import('../types').NavigationEventSubscription>;
+    [subscriptions]: NavigationEventSubscription[];
 
     componentDidMount() {
       const { navigation } = this.props;
@@ -65,5 +71,13 @@ export default function withNavigationFocus<P extends NavigationFocusInjectedPro
     }
   }
 
-  return hoistNonReactStatics(withNavigation(ComponentWithNavigationFocus), Component);
+  const hoistStatics = hoistNonReactStatics(
+    withNavigation(ComponentWithNavigationFocus),
+    Component
+  );
+
+  type Infer = InferProps<typeof hoistStatics>;
+  type Props = Omit<Infer, 'navigation'> & Partial<Infer>;
+
+  return hoistStatics as React.ComponentClass<Props>;
 }

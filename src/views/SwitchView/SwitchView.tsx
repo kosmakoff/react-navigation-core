@@ -1,12 +1,18 @@
 import * as React from 'react';
 import SceneView from '../SceneView';
 
-type NavigationState = import('../../types').NavigationState;
-type NavigationSwitchViewProps<S, O> =
-  import('../').NavigationSwitchViewProps<S, O>;
+// types
+import { Omit, NavigationState } from '../../types';
+import { NavigationViewProps } from '../../navigators';
 
-export default class SwitchView
-  extends React.Component<NavigationSwitchViewProps<NavigationState, any>> {
+type Props<State, Options> = Omit<
+  NavigationViewProps<State, Options>,
+  'navigationConfig'
+>;
+
+export default class SwitchView extends React.Component<
+  Props<NavigationState, any>
+> {
   render() {
     const { state } = this.props.navigation;
     const activeKey = state.routes[state.index].key;

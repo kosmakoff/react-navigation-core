@@ -1,11 +1,15 @@
 import withDefaultValue from '../utils/withDefaultValue';
 import { SwitchRouter } from '../routers';
 
-type NavigationState = import('../types').NavigationState;
+// types
+import {
+  NavigationState,
+  NavigationRouteConfigMap
+} from '../types';
 
 /* tslint:disable:no-parameter-reassignment */
 export function TabRouter(
-  routeConfigs: import('../types').NavigationRouteConfigMap,
+  routeConfigs: NavigationRouteConfigMap,
   config: import('../routers').NavigationTabRouterConfig<NavigationState> = {} as any
 ) {
   config = { ...config };

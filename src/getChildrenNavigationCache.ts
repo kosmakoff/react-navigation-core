@@ -1,14 +1,21 @@
-type NavigationParams = import('./types').NavigationParams;
-type NavigationState = import('./types').NavigationState;
+// types
+import {
+  NavigationScreenProp,
+  NavigationScreenPropRoot
+} from './screens';
+import {
+  NavigationState,
+  NavigationParams,
+} from './types';
 
 export default function getChildrenNavigationCache<
   State extends NavigationState,
   Params = NavigationParams,
   Actions = {}
 >(
-  navigation?: import('./screens').NavigationScreenPropRoot<State, Params, Actions>
+  navigation?: NavigationScreenPropRoot<State, Params, Actions>
 ): {
-  [child: string]: import('./screens').NavigationScreenProp<State, Params, Actions>;
+  [child: string]: NavigationScreenProp<State, Params, Actions>;
 } {
   if (!navigation) {
     return {};

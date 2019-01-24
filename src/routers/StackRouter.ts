@@ -1,3 +1,4 @@
+/* tslint:disable:no-duplicate-imports */
 import StateUtils from '../StateUtils';
 import { generateKey } from './KeyGenerator';
 import { createPathParser } from './pathUtils';
@@ -5,19 +6,29 @@ import { validateRouteConfigMap } from '../routers';
 import { NavigationActions, StackActions } from '../actions';
 import { createConfigGetter, getScreenForRouteName } from '../screens';
 
-type NavigationScreenOptions = import('../screens').NavigationScreenOptions;
-type NavigationState = import('../types').NavigationState;
-type NavigationParams = import('../types').NavigationParams;
-type NavigationStateRoute = import('../types').NavigationStateRoute;
-type NavigationRoute = import('../types').NavigationRoute;
-type NavigationStackRouterActionCreators =
-  import('../routers').NavigationStackRouterActionCreators;
-type NavigationAction = import('../actions').NavigationAction;
-type NavigationBackAction = import('../actions').NavigationBackAction;
-type NavigationNavigateAction = import('../actions').NavigationNavigateAction;
-type NavigationPopAction = import('../actions').NavigationPopAction;
-type NavigationPopActionPayload = import('../actions').NavigationPopActionPayload;
-type NavigationPopToTopActionPayload = import('../actions').NavigationPopToTopActionPayload;
+// types
+import { NavigationScreenOptions } from '../screens';
+import {
+  NavigationRouter,
+  NavigationChildRouters,
+  NavigationStackRouterConfig,
+  NavigationStackRouterActionCreators
+} from '../routers';
+import {
+  NavigationParams,
+  NavigationRoute,
+  NavigationState,
+  NavigationStateRoute,
+  NavigationRouteConfigMap
+} from '../types';
+import {
+  NavigationAction,
+  NavigationBackAction,
+  NavigationNavigateAction,
+  NavigationPopAction,
+  NavigationPopActionPayload,
+  NavigationPopToTopActionPayload
+} from '../actions';
 
 const defaultActionCreators = () => ({});
 
@@ -33,14 +44,14 @@ function isResetToRootStack(action: NavigationAction) {
 }
 
 export function StackRouter<Actions extends NavigationStackRouterActionCreators>(
-  routeConfigs: import('../types').NavigationRouteConfigMap,
-  stackConfig: import('../routers').NavigationStackRouterConfig<NavigationState> = {} as any
-): import('../routers').NavigationRouter<NavigationState, NavigationScreenOptions, Actions> {
+  routeConfigs: NavigationRouteConfigMap,
+  stackConfig: NavigationStackRouterConfig<NavigationState> = {} as any
+): NavigationRouter<NavigationState, NavigationScreenOptions, Actions> {
   // Fail fast on invalid route definitions
   validateRouteConfigMap(routeConfigs);
 
   const routeNames = Object.keys(routeConfigs);
-  const childRouters: import('../routers').NavigationChildRouters<NavigationStateRoute> = {};
+  const childRouters: NavigationChildRouters<NavigationStateRoute> = {};
 
   // Loop through routes and find child routers
   routeNames.forEach(routeName => {

@@ -15,10 +15,10 @@ export type NavigationEventTypeProps =
   | 'onWillBlur'
   | 'onDidBlur';
 
-export const NavigationViewEVENTNames: NavigationViewEventType[] = [
+export const NavigationViewEVENTNames = Object.freeze<NavigationViewEventType>([
   'willFocus', 'didFocus', 'willBlur', 'didBlur',
-];
+]);
 
-export const NavigationEVENTNames: NavigationEventType[] = [
+export const NavigationEVENTNames = Object.freeze<NavigationEventType>([
   'action', 'refocus', ...NavigationViewEVENTNames,
-];
+]);

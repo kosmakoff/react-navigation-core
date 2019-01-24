@@ -104,6 +104,4 @@ export interface NavigationEventSubscription {
 export type InferProps<T extends React.ComponentType<any>> =
   T extends React.ComponentType<infer P> ? P : never;
 
-export type Include<T, K extends keyof any> = Pick<T, Extract<keyof T, K>>;
-
 export type Omit<T, K extends keyof any> = Pick<T, Exclude<keyof T, K>>;

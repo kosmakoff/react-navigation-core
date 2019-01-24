@@ -1,4 +1,5 @@
 import { NavigationState } from '../types';
+import { NavigationRouter } from '../routers';
 import {
   NavigationConfig,
   NavigationScreenOptions,
@@ -19,19 +20,24 @@ export interface NavigationDescriptor<
   options?: Options;
 };
 
-export type NavigationView<
-  State,
-  Options,
-  Props extends NavigationViewProps<State, Options> = NavigationViewProps<State, Options>
- > =
-  React.ComponentType<{} & Props>;
-
-export interface NavigationViewProps<State, Options> {
+export type NavigationViewProps<State, Options> = {
   navigation: NavigationScreenProp<State, Options>;
-  screenProps?: NavigationComponentScreenProps;
+  screenProps: NavigationComponentScreenProps;
   navigationConfig?: NavigationConfig<State, Options>;
   descriptors: { [key: string]: NavigationDescriptor<State, Options> };
 };
+
+export type NavigationNavigatorProps<State, Options> =
+  Pick<NavigationViewProps<State, Options>, 'navigation' | 'screenProps'>;
+
+export type NavigationNavigator<
+  State,
+  Options,
+  Props extends NavigationNavigatorProps<State, Options> = NavigationNavigatorProps<State, Options>
+> =
+  React.ComponentType<Props> & {
+    router: NavigationRouter<State, Options, any>;
+  };
 
 export * from './createNavigator';
 export * from './createSwitchNavigator';

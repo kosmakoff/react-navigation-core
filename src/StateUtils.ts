@@ -1,5 +1,6 @@
-type NavigationRoute = import('./types').NavigationRoute;
-type NavigationState = import('./types').NavigationState;
+
+// types
+import { NavigationRoute, NavigationState } from './types';
 
 /**
  * Utilities to perform atomic operation with navigate state and routes.
